@@ -43,6 +43,7 @@ build/
 
 # Claude Code
 .claude/
+docs/
 
 # dadbod-grip.nvim (project-local storage; hardcoded to cwd)
 .grip/
