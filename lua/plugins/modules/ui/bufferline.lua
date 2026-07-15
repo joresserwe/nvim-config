@@ -41,7 +41,7 @@ return {
         persist_buffer_sort = true, -- whether or not custom sorted buffers should persist
         move_wraps_at_ends = false, -- whether or not the move command "wraps" at the first or last position
         -- nvim
-        custom_filter = function(bufnum, _) return vim.tbl_contains(vim.t.bufs, bufnum) end,
+        custom_filter = function(bufnum, _) return require("core.winbufs").contains(bufnum) end,
       },
     },
   },

@@ -4,6 +4,7 @@ return function(opts)
     return require("lazy.core.config").spec.plugins[plugin] ~= nil
   end
   local buffer = require "astrocore.buffer"
+  local winbufs = require "core.winbufs"
   local get_icon = function(name, padding, no_fallback)
     local icons = {
       Window = "󰖮",
@@ -98,22 +99,7 @@ return function(opts)
       ["<Leader>-"] = { "<C-w>s", desc = "가로 분할" },
       ["<Leader>="] = { "<C-w>x", desc = "분할창 순서 변경" },
 
-      ["<Leader>w"] = {
-        function()
-          local buf = vim.api.nvim_get_current_buf()
-          local wins = vim.fn.win_findbuf(buf)
-          if #wins > 1 then
-            -- 같은 버퍼가 다른 창에도 열려있으면 윈도우만 닫기
-            vim.cmd "close"
-          else
-            -- 이 창이 마지막이면 버퍼도 함께 정리
-            buffer.close(0)
-            local bufs = vim.fn.getbufinfo { buflisted = true }
-            if is_available "alpha-nvim" and not bufs[1] then require("alpha").start(true) end
-          end
-        end,
-        desc = "Close window (버퍼는 다른 창에 없을 때만 정리)",
-      },
+      ["<Leader>w"] = { winbufs.close, desc = "현재 창의 버퍼 닫기 (pane 단위)" },
 
       -- surround
       ["<Leader>y"] = { "ysiw", remap = true, desc = "Surround word" },
