@@ -91,6 +91,13 @@ return {
         ["<C-e>"] = { "hide", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["<Tab>"] = {
+          function()
+            local ok, suggestion = pcall(require, "copilot.suggestion")
+            if ok and suggestion.is_visible() then
+              suggestion.accept()
+              return true
+            end
+          end,
           "select_next",
           "snippet_forward",
           function(cmp)
