@@ -112,6 +112,9 @@ return function(opts)
       ["mf"] = { "<C-v>^<S-i>", desc = "Block insert (앞)" },
       ["mb"] = { "<C-v>$<S-a>", desc = "Block append (뒤)" },
     },
+    t = {
+      ["<C-w>"] = { [[<C-\><C-n><C-w>]], remap = true, desc = "창 명령" },
+    },
   })
 
   ---------------------------------------------------------------------------
