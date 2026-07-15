@@ -24,15 +24,16 @@ local function ensure_init()
     if vim.env.WEZTERM_PANE then
       nvim_pane = vim.env.WEZTERM_PANE
     else
-      local info = vim.fn.system(wezterm_bin .. " cli list --format json 2>/dev/null")
-      local ok, panes = pcall(vim.json.decode, info)
+      -- WSL에는 WEZTERM_PANE이 전달되지 않음 → 포커스된 pane으로 감지
+      -- (cli list의 is_active는 탭마다 하나씩 있어 다른 탭 pane이 잡힐 수 있음)
+      local info = vim.fn.system(wezterm_bin .. " cli list-clients --format json 2>/dev/null")
+      local ok, clients = pcall(vim.json.decode, info)
       if ok then
-        for _, p in ipairs(panes) do
-          if p.is_active then
-            nvim_pane = tostring(p.pane_id)
-            break
-          end
+        local best
+        for _, c in ipairs(clients) do
+          if c.focused_pane_id and (not best or c.idle_time.secs < best.idle_time.secs) then best = c end
         end
+        if best then nvim_pane = tostring(best.focused_pane_id) end
       end
     end
   elseif vim.env.TMUX then
