@@ -8,8 +8,6 @@ return {
   { import = "astrocommunity.editing-support.conform-nvim" },
   { import = "astrocommunity.editing-support.refactoring-nvim" },
 
-  { import = "astrocommunity.git.diffview-nvim" },
-
   { import = "astrocommunity.lsp.inc-rename-nvim" },
 
   { import = "astrocommunity.markdown-and-latex/markdown-preview-nvim" },
