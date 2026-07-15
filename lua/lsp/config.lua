@@ -12,6 +12,7 @@ M.handlers = {
   -- v6: default handler는 ["*"] = function(server) vim.lsp.enable(server) end
   -- rust_analyzer = false, -- false면 해당 서버 비활성화
   -- pyright = function(server) vim.lsp.enable(server) end -- 커스텀 핸들러
+  jdtls = false, -- nvim-jdtls가 직접 구동 (modules/lsp/language/java.lua)
 }
 
 -- customize language server configuration options passed to `lspconfig`
