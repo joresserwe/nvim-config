@@ -1,5 +1,8 @@
 local icons = require "core.icons"
 
+-- mason 바이너리 PATH 주입 — mason.nvim의 lazy 로드 시점과 무관하게 LSP/포맷터 spawn이 항상 찾도록
+vim.env.PATH = vim.fn.stdpath "data" .. "/mason/bin:" .. vim.env.PATH
+
 local merge = function(a, b) return vim.tbl_deep_extend("force", a or {}, b or {}) end
 
 local base_opt = {
