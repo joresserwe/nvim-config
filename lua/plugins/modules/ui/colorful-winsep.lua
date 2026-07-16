@@ -1,4 +1,4 @@
--- 활성 윈도우 테두리 색상 강조 (tmux 스타일)
+-- Highlight the active window's border color (tmux style).
 ---@type LazySpec
 return {
   {

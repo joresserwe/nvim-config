@@ -1,6 +1,6 @@
--- WSL2 전용 clipboard provider 등록.
--- mac/native linux은 nvim 기본 provider 사용.
--- WSL2 clipboard: executable 확인이 느리므로 비동기로 지연.
+-- Register a WSL2-only clipboard provider.
+-- mac / native linux use nvim's default provider.
+-- WSL2 clipboard: the executable check is slow, so defer it asynchronously.
 
 local platform = require "core.platform"
 if not platform.is_wsl then return end
@@ -33,5 +33,5 @@ vim.schedule(function()
       cache_enabled = 0,
     }
   end
-  -- 둘 다 없으면 기본 provider로 fallback (대개 무동작). notify 없음.
+  -- Neither available: fall back to the default provider (usually a no-op). No notify.
 end)

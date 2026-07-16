@@ -1,6 +1,8 @@
 # CLAUDE.md
 
-Personal Neovim config on **plain lazy.nvim** + native APIs (Neovim 0.12+). Lua, Korean comments. (2026-07 AstroNvim에서 완전 이탈.)
+Personal Neovim config on **plain lazy.nvim** + native APIs (Neovim 0.12+). Lua. (2026-07 AstroNvim에서 완전 이탈.)
+
+**Comments: English only, and only when they earn their place** — never justification/provenance notes ("moved from…", "safe because…", "replaces old X"); that story belongs in commit messages. Keymap `desc` strings are UI text, not comments — Korean allowed there.
 
 Runs on **macOS (native)** and **WinOS (WSL2 Ubuntu)** from a single shared repo — no `mac/`/`win/` split. OS differences are handled inline via `core/platform.lua` + `cond =` plugin gating. Single `lazy-lock.json` shared across both. OS isolation rule: a macOS-only edit must not touch WinOS-only code, and vice versa; portable changes apply to both 1:1.
 

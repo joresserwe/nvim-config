@@ -1,6 +1,5 @@
 local icons = require "core.icons"
 
--- mason 바이너리 PATH 주입 — mason.nvim의 lazy 로드 시점과 무관하게 LSP/포맷터 spawn이 항상 찾도록
 vim.env.PATH = vim.fn.stdpath "data" .. "/mason/bin:" .. vim.env.PATH
 
 local merge = function(a, b) return vim.tbl_deep_extend("force", a or {}, b or {}) end
@@ -65,7 +64,7 @@ opt.foldtext = ""
 opt.foldcolumn = "0"
 opt.foldenable = true
 
--- clipboard는 지연 설정 (시작 시 provider 탐색 비용 회피)
+-- Defer clipboard setup (avoids the provider-discovery cost at startup).
 local lazy_clipboard = opt.clipboard
 opt.clipboard = nil
 vim.schedule(function() vim.opt.clipboard = lazy_clipboard end)

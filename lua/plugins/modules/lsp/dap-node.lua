@@ -1,5 +1,5 @@
--- JavaScript/TypeScript DAP 어댑터 + 기본 configuration.
--- mason으로 설치된 js-debug-adapter를 사용한 pwa-node 구동.
+-- JavaScript/TypeScript DAP adapter + default configuration.
+-- Runs pwa-node via the mason-installed js-debug-adapter.
 return {
   "mfussenegger/nvim-dap",
   optional = true,
@@ -12,7 +12,7 @@ return {
       executable = {
         command = "node",
         args = {
-          -- mason 2.0: get_install_path() 제거됨. 표준 경로로 직접 참조.
+          -- mason 2.0 removed get_install_path(); reference the standard path directly.
           vim.fn.stdpath "data" .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
           "${port}",
         },

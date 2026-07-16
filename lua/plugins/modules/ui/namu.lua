@@ -1,4 +1,4 @@
--- Zed 스타일 LSP 심볼 네비게이터 (계층 유지, kind 필터링, 멀티셀렉트)
+-- Zed-style LSP symbol navigator (keeps hierarchy, kind filtering, multi-select).
 return {
   "bassamsdata/namu.nvim",
   event = "VeryLazy",

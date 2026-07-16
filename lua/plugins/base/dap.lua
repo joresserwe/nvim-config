@@ -29,7 +29,7 @@ return {
       vim.fn.sign_define(name, def)
     end
   end,
-  -- showkey -a 로 확인한 수정자 조합 function 키 (Shift/Control 포함)
+  -- Modifier-combo function keys verified with showkey -a (includes Shift/Control).
   keys = {
     { "<F5>", function() require("dap").continue() end, desc = "Debugger: Start" },
     { "<F6>", function() require("dap").pause() end, desc = "Debugger: Pause" },

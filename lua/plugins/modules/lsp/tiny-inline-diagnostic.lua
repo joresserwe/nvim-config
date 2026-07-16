@@ -1,4 +1,4 @@
--- 인라인 diagnostic을 아이콘+색상으로 예쁘게 표시
+-- Pretty inline diagnostics with icons and color.
 return {
   "rachartier/tiny-inline-diagnostic.nvim",
   event = "VeryLazy",

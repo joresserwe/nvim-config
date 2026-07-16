@@ -150,7 +150,7 @@ return {
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
         },
       },
-      -- vim.snippet 내장 엔진 사용 (friendly-snippets 자동 로드)
+      -- Uses vim.snippet's built-in engine (friendly-snippets auto-loaded).
     },
     specs = {
       {

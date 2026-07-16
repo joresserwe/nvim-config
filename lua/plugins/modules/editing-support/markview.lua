@@ -1,5 +1,5 @@
--- markview.nvim 에러 방지: snacks picker preview에서 strict_render 호출 시
--- preview.callbacks가 nil이 되어 에러 발생하는 문제 해결
+-- Work around a markview.nvim error: when strict_render is called from the snacks picker
+-- preview, preview.callbacks becomes nil and throws.
 ---@type LazySpec
 return {
   "OXY2DEV/markview.nvim",

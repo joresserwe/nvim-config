@@ -1,8 +1,8 @@
--- 커서 이동 시 스미어(잔상) 애니메이션 효과
+-- Smear (trail) animation on cursor movement.
 return {
   "sphamba/smear-cursor.nvim",
   event = "VeryLazy",
-  cond = vim.g.neovide == nil, -- Neovide는 자체 커서 애니메이션 사용
+  cond = vim.g.neovide == nil, -- Neovide has its own cursor animation
   opts = {
     smear_between_buffers = true,
     smear_between_neighbor_lines = true,

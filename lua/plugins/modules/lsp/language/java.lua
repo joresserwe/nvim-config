@@ -1,5 +1,5 @@
--- Java: nvim-jdtls로 jdtls 직접 구동 + java-debug/java-test DAP 연동.
--- mason-lspconfig 자동 셋업에서는 제외됨 (lsp/setup.lua의 enable 목록에서 제외).
+-- Java: drive jdtls directly via nvim-jdtls + java-debug/java-test DAP integration.
+-- Excluded from mason-lspconfig auto-setup (left out of the enable list in lsp/setup.lua).
 return {
   "mfussenegger/nvim-jdtls",
   ft = "java",

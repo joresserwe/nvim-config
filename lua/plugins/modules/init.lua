@@ -26,7 +26,7 @@ local function should_exclude(module_name)
   return false
 end
 
--- init.lua가 있는 디렉토리를 수집 — 해당 디렉토리의 하위 파일은 init.lua가 직접 관리
+-- Collect directories that have their own init.lua — their child files are managed by that init.lua.
 local function collect_init_dirs(modules, dir)
   local init_dirs = {}
   for _, path in ipairs(modules) do
@@ -39,7 +39,7 @@ local function collect_init_dirs(modules, dir)
   return init_dirs
 end
 
--- 경로가 init_dirs에 속하는 하위 파일인지 확인
+-- Whether path is a child file inside one of init_dirs.
 local function is_child_of_init_dir(path, init_dirs)
   for init_dir in pairs(init_dirs) do
     if path ~= init_dir .. "/init.lua" and path:sub(1, #init_dir + 1) == init_dir .. "/" then return true end

@@ -5,7 +5,7 @@ local function is_valid(bufnr)
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
--- `User Astro<pattern>` 발화 — 기존 소비 스펙들의 이벤트명 호환을 위해 Astro 접두사 유지
+-- Fire `User Astro<pattern>` — keep the Astro prefix so existing consumer specs' event names still match.
 local function emit(pattern, instant)
   local event = { pattern = "Astro" .. pattern, modeline = false }
   if instant then
@@ -17,7 +17,6 @@ end
 
 local current_buf, last_buf
 
--- auto_quit (neo-tree 사이드바만)
 vim.api.nvim_create_autocmd("BufEnter", {
   group = augroup "auto_quit",
   desc = "Quit if only sidebar windows are left",
@@ -43,7 +42,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- bufferline: vim.t.bufs 추적
 local bufferline_group = augroup "bufferline"
 vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   group = bufferline_group,
@@ -88,7 +86,6 @@ vim.api.nvim_create_autocmd({ "BufDelete", "TermClose" }, {
   end,
 })
 
--- checktime
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup "checktime",
   desc = "Check if buffers changed on editor focus",
@@ -97,7 +94,6 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   end,
 })
 
--- create_dir
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = augroup "create_dir",
   desc = "Automatically create parent directories if they don't exist when saving a file",
@@ -108,7 +104,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
--- file_user_events: `User AstroFile`/`AstroGitFile` 발화
 local function git_tracked(folder)
   local cmd = { "git", "-C", folder, "rev-parse" }
   if vim.fn.has "win32" == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
@@ -159,7 +154,6 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   end,
 })
 
--- highlightyank
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup "highlightyank",
   desc = "Highlight yanked text",
@@ -167,7 +161,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function() vim.hl.on_yank() end,
 })
 
--- large_buf 감지 (256KB / 10000줄) + `User AstroLargeBuf`
 local large_buf_opts = { size = 1024 * 256, lines = 10000, line_length = 1000 }
 local function is_large(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
@@ -206,7 +199,6 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- q_close_windows
 local q_close_group = augroup "q_close_windows"
 local q_mapped = {}
 vim.api.nvim_create_autocmd("BufWinEnter", {
@@ -234,7 +226,6 @@ vim.api.nvim_create_autocmd("BufDelete", {
   callback = function(args) q_mapped[args.buf] = nil end,
 })
 
--- restore_cursor
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup "restore_cursor",
   desc = "Restore last cursor position when opening a file",
@@ -249,7 +240,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- unlist_quickfix
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup "unlist_quickfix",
   desc = "Unlist quickfix buffers",
@@ -257,7 +247,6 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
--- auto_hlsearch (vim.on_key)
 local mid_mapping = false
 vim.on_key(function(char)
   if mid_mapping then return end

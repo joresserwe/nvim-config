@@ -1,4 +1,4 @@
--- 비활성 윈도우 dim 처리
+-- Dim inactive windows.
 ---@type LazySpec
 return {
   {

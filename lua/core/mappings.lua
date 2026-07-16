@@ -1,8 +1,8 @@
--- 순수 편집 매핑 (플러그인 무관). polish.lua에서 로드 — lazy 셋업 이후 실행되어 기본값보다 항상 우선한다.
+-- Pure editing mappings (plugin-agnostic). Loaded from polish.lua — runs after lazy setup, so it always wins over defaults.
 local map = vim.keymap.set
 local winbufs = require "core.winbufs"
 
--- 레지스터 규율: y→i(inner), d→d(del), Y/·s 계열→시스템 클립보드, x/c→블랙홀
+-- Register discipline: y→i(inner), d→d(del), Y / s family→system clipboard, x/c→blackhole
 map("", "x", '"_x')
 map("", "c", '"_c')
 map("", "y", '"iy', { desc = "yank (inner reg)" })
@@ -97,7 +97,7 @@ map("v", "<S-Tab>", "<gv", { desc = "Unindent line" })
 map("n", "]t", function() vim.cmd.tabnext() end, { desc = "Next tab" })
 map("n", "[t", function() vim.cmd.tabprevious() end, { desc = "Previous tab" })
 
--- 진단
+-- Diagnostics
 map("n", "<Leader>li", function() vim.cmd.checkhealth "vim.lsp" end, { desc = "Lsp Information" })
 map("n", "<Leader>ld", function() vim.diagnostic.open_float() end, { desc = "Hover diagnostics" })
 map("n", "gl", function() vim.diagnostic.open_float() end, { desc = "Hover diagnostics" })
@@ -111,7 +111,7 @@ map("n", "]e", diagnostic_jump(true, "ERROR"), { desc = "Next error" })
 map("n", "[w", diagnostic_jump(false, "WARN"), { desc = "Previous warning" })
 map("n", "]w", diagnostic_jump(true, "WARN"), { desc = "Next warning" })
 
--- 버퍼 (bufferline 명령 기반)
+-- Buffers (bufferline commands)
 map("n", "]b", function() require("bufferline").cycle(vim.v.count1) end, { desc = "Next buffer" })
 map("n", "[b", function() require("bufferline").cycle(-vim.v.count1) end, { desc = "Previous buffer" })
 map("n", ">b", function() require("bufferline").move(vim.v.count1) end, { desc = "Move buffer tab right" })
@@ -124,7 +124,7 @@ map("n", "<Leader>bse", "<Cmd>BufferLineSortByExtension<CR>", { desc = "By exten
 map("n", "<Leader>bsp", "<Cmd>BufferLineSortByDirectory<CR>", { desc = "By directory" })
 map("n", "<Leader>bsr", "<Cmd>BufferLineSortByRelativeDirectory<CR>", { desc = "By relative directory" })
 
--- 터미널 창 이동
+-- Terminal window navigation
 local function term_nav(dir)
   return function()
     if vim.api.nvim_win_get_config(0).zindex then
@@ -139,7 +139,7 @@ map("t", "<C-J>", term_nav "j", { desc = "Terminal down window navigation" })
 map("t", "<C-K>", term_nav "k", { desc = "Terminal up window navigation" })
 map("t", "<C-L>", term_nav "l", { desc = "Terminal right window navigation" })
 
--- UI/UX 토글 (<Leader>u*)
+-- UI/UX toggles (<Leader>u*)
 map("n", "<Leader>ub", function()
   vim.go.background = vim.go.background == "light" and "dark" or "light"
   vim.notify(("background=%s"):format(vim.go.background))

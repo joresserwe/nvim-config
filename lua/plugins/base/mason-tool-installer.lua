@@ -8,7 +8,7 @@ return {
     "MasonToolsClean",
   },
   dependencies = { "mason-org/mason.nvim" },
-  -- mason.nvim 로드 시 함께 로드 (이미 로드됐으면 즉시, 아니면 User LazyLoad 대기)
+  -- Load alongside mason.nvim (immediately if already loaded, else wait on User LazyLoad).
   init = function(plugin)
     local lazy_config = require "lazy.core.config"
     local load = function() require("lazy").load { plugins = { plugin.name } } end

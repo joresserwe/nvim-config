@@ -85,7 +85,7 @@ return {
                 table.sort(indices_to_delete, function(a, b) return a > b end)
 
                 local deleted_count = 0
-                local failed_count = items_without_id_count -- 식별자 없는 항목 수를 초기 실패 카운트에 포함
+                local failed_count = items_without_id_count -- seed the failure count with items that have no id
 
                 for _, index_to_delete in ipairs(indices_to_delete) do
                   local success, err = pcall(require("yanky.picker").actions.delete(), {
@@ -117,7 +117,7 @@ return {
                 end
                 if #final_msg > 0 then vim.notify(table.concat(final_msg, " "), vim.log.levels.INFO) end
 
-                -- 삭제가 성공한 경우 피커 갱신 (닫고 다시 열기)
+                -- Refresh the picker if anything was deleted (close and reopen).
                 if deleted_count > 0 then
                   picker:close()
                   vim.schedule(function() require("snacks").picker.yanky() end)

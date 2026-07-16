@@ -1,4 +1,4 @@
--- yazi 파일매니저 플로팅 윈도우 연동
+-- yazi file-manager floating-window integration.
 return {
   "mikavilpas/yazi.nvim",
   dependencies = { "folke/snacks.nvim" },

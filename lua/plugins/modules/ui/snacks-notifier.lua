@@ -1,6 +1,6 @@
 local filtered_messages = {
   "vim.tbl_islist is deprecated",
-  -- 무시할 Message는 요기에 추가
+  -- Add messages to ignore here.
 }
 
 return {

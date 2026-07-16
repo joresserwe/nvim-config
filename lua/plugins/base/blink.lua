@@ -4,7 +4,7 @@ return {
   event = { "InsertEnter", "CmdlineEnter" },
   opts_extend = { "sources.default", "cmdline.sources", "term.sources" },
   opts = {
-    -- vim.b/g.completion 을 <Leader>uc/uC 토글이 뒤집는다
+    -- The <Leader>uc/uC toggles flip vim.b/g.completion.
     enabled = function()
       if vim.bo.buftype == "prompt" then return false end
       return vim.F.if_nil(vim.b.completion, vim.g.completion, true)

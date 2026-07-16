@@ -1,4 +1,4 @@
--- diagnostics, references, quickfix 통합 리스트
+-- Unified list for diagnostics, references, and quickfix.
 return {
   "folke/trouble.nvim",
   cmd = "Trouble",
@@ -9,10 +9,10 @@ return {
   },
   opts = {
     focus = true,
-    auto_close = true, -- 마지막 항목 해결되면 자동 닫힘
+    auto_close = true,
   },
   init = function()
-    -- 빌트인 quickfix 창 대신 Trouble로 열기
+    -- Open with Trouble instead of the built-in quickfix window.
     vim.api.nvim_create_autocmd("QuickFixCmdPost", {
       callback = function()
         vim.schedule(function() vim.cmd "Trouble qflist open" end)

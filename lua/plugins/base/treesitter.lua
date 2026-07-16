@@ -1,4 +1,4 @@
--- nvim-treesitter(main) 네이티브 설정기
+-- Native configurator for nvim-treesitter (main).
 local M = {}
 
 local installed = {}

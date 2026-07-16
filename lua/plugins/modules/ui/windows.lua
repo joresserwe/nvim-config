@@ -1,19 +1,18 @@
 ---@type LazySpec
 return {
-  -- 수동 리사이즈: <C-w>r 로 resize 모드 진입, hjkl 로 조절
+  -- Manual resize: <C-w>r enters resize mode, hjkl to adjust.
   {
     "mrjones2014/smart-splits.nvim",
     event = "VeryLazy",
     dependencies = { "pogyomo/submode.nvim" },
     config = function()
       require("smart-splits").setup {
-        -- wezterm.lua 의 is_vim() + ActivatePaneDirection 이 nvim↔pane 전환을 처리하므로
-        -- mux 통합 비활성화 (WSL 에서 wezterm.exe cli 동기 호출 지연 방지)
+        -- wezterm.lua's is_vim() + ActivatePaneDirection already handle nvim↔pane switching,
+        -- so disable mux integration (avoids the sync wezterm.exe cli call latency on WSL).
         multiplexer_integration = false,
       }
 
       local submode = require "submode"
-      -- <C-w>r 또는 <C-w><C-r> 로 resize 모드 진입
       vim.keymap.set("n", "<C-w><C-r>", "<C-w>r", { remap = true, desc = "Resize mode" })
 
       submode.create("WinResize", {

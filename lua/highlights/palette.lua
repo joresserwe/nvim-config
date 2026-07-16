@@ -1,5 +1,5 @@
--- CSS Named Colors 팔레트
--- 사용: require("highlights.palette").crimson 등
+-- CSS Named Colors palette.
+-- Usage: require("highlights.palette").crimson, etc.
 
 return {
   none = "NONE",

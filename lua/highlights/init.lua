@@ -1,6 +1,6 @@
 local user = require "highlights.colors"
 
--- 색상 유틸 ---------------------------------------------------------------
+-- Color utilities ---------------------------------------------------------
 
 local function hex_to_rgb(hex)
   hex = string.lower(hex)
@@ -24,13 +24,13 @@ local function rgba(r, g, b, alpha, base)
   }
 end
 
---- alpha가 클수록 hexColor에 가까워진다
+--- Larger alpha moves the result closer to hexColor.
 local function blend(hexColor, alpha, base)
   local rgb = hex_to_rgb(hexColor)
   return rgba(rgb.r, rgb.g, rgb.b, alpha, base)
 end
 
--- 테마 팔레트 추출 ---------------------------------------------------------
+-- Extract theme palette ---------------------------------------------------
 
 local function palette()
   local function get_fg(name)
@@ -54,7 +54,7 @@ local function palette()
   }
 end
 
--- 시맨틱 색상 resolve (사용자 설정 → 테마 폴백) ----------------------------
+-- Resolve semantic colors (user config → theme fallback) ------------------
 
 local _cache = nil
 
@@ -79,7 +79,7 @@ end
 
 local function invalidate() _cache = nil end
 
--- 외부 접근용 (scrollbar 등에서 require("highlights").accent 형태로 사용)
+-- For external access (used as require("highlights").accent, e.g. from scrollbar)
 local M = { invalidate = invalidate }
 setmetatable(M, {
   __index = function(_, k)

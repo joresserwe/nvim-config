@@ -1,4 +1,4 @@
--- 창별 버퍼 목록: IDEA 분할창처럼 buffer를 pane(window)에 종속시킨다
+-- Per-window buffer list: bind buffers to a pane (window), like IDEA's split view.
 local M = {}
 
 local function trackable(buf)
@@ -10,8 +10,8 @@ local function set_list(win, bufs)
   vim.w[win].winbufs_owner = win
 end
 
---- 창의 버퍼 목록. w: 변수는 분할 시 원본 창에서 복사되므로
---- owner가 현재 창이 아니면 표시 중인 버퍼 하나로 초기화한다
+--- A window's buffer list. w: vars are copied from the source window on split,
+--- so if the owner isn't the current window, reinit to just the displayed buffer.
 function M.list(win)
   win = win or vim.api.nvim_get_current_win()
   if vim.w[win].winbufs_owner ~= win then
@@ -30,14 +30,14 @@ function M.add(win, buf)
   end
 end
 
---- bufferline 필터용: 목록이 없는 창(neo-tree, 대시보드 등)은 전역 목록으로 폴백
+--- For the bufferline filter: windows without a list (neo-tree, dashboard, etc.) fall back to the global list.
 function M.contains(buf, win)
   local bufs = M.list(win)
   if #bufs == 0 then return not vim.t.bufs or vim.tbl_contains(vim.t.bufs, buf) end
   return vim.tbl_contains(bufs, buf)
 end
 
---- 다른 창이 buf를 표시 중이거나 목록에 갖고 있는지
+--- Whether another window is displaying buf or holds it in its list.
 local function referenced(buf, skip_win)
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if win ~= skip_win and vim.api.nvim_win_get_buf(win) == buf then return true end
@@ -59,8 +59,8 @@ local function delete_buf(buf)
   pcall(vim.api.nvim_buf_delete, buf, { force = true })
 end
 
---- 현재 버퍼를 이 창의 목록에서만 제거. 목록이 비면 창을 닫고,
---- 버퍼 삭제는 어느 창에도 남지 않았을 때만 수행한다
+--- Remove the current buffer from this window's list only. If the list empties, close the window;
+--- delete the buffer only when it remains in no window.
 function M.close()
   local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_win_get_buf(win)
@@ -82,7 +82,7 @@ function M.close()
 
   if not referenced(buf, win) then delete_buf(buf) end
 
-  -- 마지막 창에서 마지막 버퍼를 닫았으면 대시보드로
+  -- Closed the last buffer in the last window: go to the dashboard.
   if not closed and #rest == 0 and vim.api.nvim_win_is_valid(win) then
     local cur = vim.api.nvim_win_get_buf(win)
     if vim.api.nvim_buf_get_name(cur) == "" and not vim.bo[cur].modified then
@@ -99,7 +99,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 vim.api.nvim_create_autocmd("WinEnter", {
   group = group,
   callback = function()
-    -- 분할 직후 버퍼를 바꾸기 전에 목록을 초기화해 둔다
+    -- Seed the list right after a split, before the buffer changes.
     M.add(vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf())
     vim.cmd.redrawtabline()
   end,

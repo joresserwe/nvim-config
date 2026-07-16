@@ -1,4 +1,4 @@
--- mux 감지 시 조기 로드 (core.platform 사용).
+-- Load early when a mux is detected (uses core.platform).
 local platform = require "core.platform"
 local mux = platform.in_tmux or platform.in_wezterm
 

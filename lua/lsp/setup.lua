@@ -1,4 +1,4 @@
--- 네이티브 LSP 부트스트랩. polish.lua에서 로드 — 서버 설정 병합은 rtp lsp/ 디렉토리가 담당한다.
+-- Native LSP bootstrap. Loaded from polish.lua — server config merging is handled by the rtp lsp/ directory.
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 local blink_ok, blink = pcall(require, "blink.cmp")
 if blink_ok then capabilities = blink.get_lsp_capabilities(capabilities) end

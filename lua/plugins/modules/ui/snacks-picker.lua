@@ -46,7 +46,7 @@ return {
         notifications = {
           layout = {
             layout = {
-              box = "vertical", -- 전체 구조를 수직으로 배치
+              box = "vertical",
               width = 0.7,
               height = 0.6,
               border = "rounded",

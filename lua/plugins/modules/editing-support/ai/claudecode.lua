@@ -1,5 +1,5 @@
--- Claude Code 공식 Neovim IDE 확장
--- MCP 프로토콜을 통해 에디터↔Claude Code CLI 간 양방향 통신
+-- Claude Code's official Neovim IDE extension.
+-- Bidirectional editor↔Claude Code CLI communication over the MCP protocol.
 return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },

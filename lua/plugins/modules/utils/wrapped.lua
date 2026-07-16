@@ -1,4 +1,4 @@
--- Neovim 사용 통계 및 히트맵 시각화
+-- Neovim usage stats and heatmap visualization.
 return {
   "aikhe/wrapped.nvim",
   cmd = "Wrapped",

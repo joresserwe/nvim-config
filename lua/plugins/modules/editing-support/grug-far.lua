@@ -1,4 +1,4 @@
--- 프로젝트 전체 검색/치환 (ripgrep 기반)
+-- Project-wide search/replace (ripgrep-based).
 return {
   "MagicDuck/grug-far.nvim",
   cmd = "GrugFar",

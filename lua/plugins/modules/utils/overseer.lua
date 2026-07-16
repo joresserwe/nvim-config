@@ -1,7 +1,6 @@
--- overseer.nvim: 범용 태스크 러너.
--- 내장 템플릿(npm, .vscode/tasks.json, shell 등) + gradle/Spring 커스텀 템플릿.
+-- overseer.nvim: general-purpose task runner.
+-- Built-in templates (npm, .vscode/tasks.json, shell, etc.) plus gradle/Spring custom templates.
 
--- 현재 위치에서 위로 올라가며 gradle 프로젝트 루트 탐색
 local function find_gradle_root(dir)
   local found = vim.fs.find(
     { "gradlew", "settings.gradle", "settings.gradle.kts", "build.gradle", "build.gradle.kts" },
@@ -36,7 +35,6 @@ local function gradle_templates()
         end,
       })
 
-      -- $CATALINA_HOME 설정 시에만 노출
       if vim.env.CATALINA_HOME then
         table.insert(templates, {
           name = "외장 tomcat 배포 실행 ($CATALINA_HOME)",

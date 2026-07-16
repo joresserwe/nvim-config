@@ -1,4 +1,4 @@
--- 모든 LSP 클라이언트 공통 버퍼 매핑. 기능 토글은 네이티브 API로 구현.
+-- Common buffer mappings for all LSP clients. Feature toggles use native APIs.
 local codelens_enabled = false
 
 vim.api.nvim_create_autocmd("LspAttach", {

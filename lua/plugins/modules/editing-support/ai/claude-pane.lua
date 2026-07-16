@@ -1,6 +1,6 @@
--- 외부 터미널 pane에서 Claude CLI 직접 실행 (wezterm > tmux)
--- claudecode.nvim의 external provider도 이 모듈을 통해 동일한 pane 분할 로직을 재사용한다.
--- nvim 종료 시 생성된 pane을 자동으로 정리한다.
+-- Run the Claude CLI directly in an external terminal pane (wezterm > tmux).
+-- claudecode.nvim's external provider reuses this module's pane-split logic.
+-- Panes created here are auto-cleaned on nvim exit.
 local platform = require "core.platform"
 
 local M = {}
@@ -8,7 +8,7 @@ local M = {}
 ---@type string[]
 local pane_ids = {}
 
--- lazy init: 첫 사용 시점까지 외부 명령 호출을 지연
+-- lazy init: defer external command calls until first use
 local _initialized = false
 local wezterm_bin, backend, nvim_pane
 
@@ -20,12 +20,11 @@ local function ensure_init()
 
   if platform.in_wezterm then
     backend = "wezterm"
-    -- wezterm pane id 감지
     if vim.env.WEZTERM_PANE then
       nvim_pane = vim.env.WEZTERM_PANE
     else
-      -- WSL에는 WEZTERM_PANE이 전달되지 않음 → 포커스된 pane으로 감지
-      -- (cli list의 is_active는 탭마다 하나씩 있어 다른 탭 pane이 잡힐 수 있음)
+      -- WSL doesn't get WEZTERM_PANE; detect via the focused pane instead.
+      -- (cli list's is_active reports one per tab, so it can pick a pane in another tab)
       local info = vim.fn.system(wezterm_bin .. " cli list-clients --format json 2>/dev/null")
       local ok, clients = pcall(vim.json.decode, info)
       if ok then
@@ -42,8 +41,8 @@ local function ensure_init()
   end
 end
 
---- 주어진 pane의 cols/rows를 구해 분할 방향 결정 (셀 종횡비 2.2x 보정)
----@param target string  대상 pane id
+--- Decide split direction from the pane's cols/rows (cell aspect-ratio 2.2x correction).
+---@param target string  target pane id
 ---@return string direction wezterm: "--right"|"--bottom", tmux: "-h"|"-v"
 local function smart_dir(target)
   local cols, rows
@@ -68,12 +67,12 @@ local function smart_dir(target)
   end
 end
 
---- split-pane 명령어 빌드. env_table이 주어지면 새 pane에 환경변수 주입.
----@param shell_cmd string  새 pane에서 실행할 셸 커맨드
----@param env_table table?  환경변수 테이블 {KEY=VAL,...}
----@return string[] cmd     vim.fn.system / jobstart에 넘길 인자 리스트
+--- Build the split-pane command. If env_table is given, inject env vars into the new pane.
+---@param shell_cmd string  shell command to run in the new pane
+---@param env_table table?  env var table {KEY=VAL,...}
+---@return string[] cmd     argument list to pass to vim.fn.system / jobstart
 local function build_split_cmd(shell_cmd, env_table)
-  -- 첫 호출: nvim pane을 분할. 이후: 마지막으로 만든 claude pane을 다시 분할.
+  -- First call: split the nvim pane. After: split the most recently created claude pane.
   local target = pane_ids[#pane_ids] or nvim_pane
   local percent = pane_ids[#pane_ids] and "50" or "35"
   local dir = smart_dir(target)
@@ -111,7 +110,7 @@ local function kill_all()
   pane_ids = {}
 end
 
---- 새 외부 pane에 standalone claude CLI 실행 (복수 가능)
+--- Run a standalone claude CLI in a new external pane (multiple allowed).
 function M.open()
   ensure_init()
   if not backend then
@@ -124,10 +123,10 @@ function M.open()
   end
 end
 
---- claudecode.nvim external_terminal_cmd 콜백.
---- claudecode가 부여한 cmd_string과 env_table을 받아 외부 pane에서 실행할 명령을 리턴.
----@param cmd_string string  실행할 claude CLI 커맨드
----@param env_table table    CLAUDE_CODE_SSE_PORT 등 MCP 연결용 env
+--- claudecode.nvim external_terminal_cmd callback.
+--- Takes the cmd_string and env_table from claudecode and returns the command to run in an external pane.
+---@param cmd_string string  claude CLI command to run
+---@param env_table table    MCP-connection env such as CLAUDE_CODE_SSE_PORT
 ---@return string[]?
 function M.external_cmd(cmd_string, env_table)
   ensure_init()
@@ -135,16 +134,15 @@ function M.external_cmd(cmd_string, env_table)
     vim.notify("claude-pane: wezterm/tmux 환경이 아닙니다", vim.log.levels.WARN)
     return nil
   end
-  -- claudecode가 만든 pane id를 추적할 방법이 없으므로 pane_ids에는 넣지 않는다.
-  -- (claudecode.nvim이 jobstart로 wezterm cli 호출을 끝내면 정리는 사용자/Vim 종료에 맡김)
+  -- No way to track the pane id claudecode creates, so it's not added to pane_ids.
+  -- (claudecode.nvim fires the wezterm cli call via jobstart; cleanup is left to the user / Vim exit)
   return build_split_cmd(cmd_string, env_table)
 end
 
---- 외부 pane 사용 가능 여부 (env 판정만 — 외부 프로세스 호출 없음)
+--- Whether external panes are usable (env check only — no external process calls).
 ---@return boolean
 function M.is_available() return platform.in_wezterm or platform.in_tmux end
 
--- nvim 종료 시 standalone pane 자동 정리
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = kill_all,
   desc = "claude-pane: 외부 pane 정리",

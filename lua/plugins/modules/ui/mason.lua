@@ -2,7 +2,7 @@ return {
   "mason-org/mason.nvim",
   opts = {
     ui = {
-      border = "rounded", -- "single", "rounded", "double", "shadow", "none" 등도 가능
+      border = "rounded", -- also accepts "single", "double", "shadow", "none", etc.
     },
   },
 }

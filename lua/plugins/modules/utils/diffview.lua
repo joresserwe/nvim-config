@@ -1,4 +1,4 @@
--- sindrets/diffview.nvim의 유지보수 포크 (drop-in 호환)
+-- Maintained fork of sindrets/diffview.nvim (drop-in compatible).
 return {
   "dlyongemallo/diffview-plus.nvim",
   event = "User AstroGitFile",
