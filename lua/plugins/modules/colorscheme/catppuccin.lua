@@ -11,6 +11,7 @@ return {
         dap_ui = true,
         mason = true,
         neotree = true,
+        noice = true,
         notify = true,
         nvimtree = false,
         semantic_tokens = true,

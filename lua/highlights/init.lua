@@ -87,14 +87,30 @@ setmetatable(M, {
   end,
 })
 
--- AstroUI용 highlight 빌더 ------------------------------------------------
-
 function M.build()
   invalidate()
   local c = resolve()
   local NONE = "NONE"
   local bg = c.transparent_bg and NONE or c.bg
   return user.highlights(c, bg)
+end
+
+local function apply()
+  if not vim.g.colors_name then return end
+  pcall(function()
+    for group, spec in pairs(M.build() or {}) do
+      vim.api.nvim_set_hl(0, group, spec)
+    end
+  end)
+end
+
+function M.setup()
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    desc = "Load custom highlights from user configuration",
+    group = vim.api.nvim_create_augroup("user_highlights", { clear = true }),
+    callback = apply,
+  })
+  apply()
 end
 
 return M
