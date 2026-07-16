@@ -149,7 +149,7 @@ All configured with transparent backgrounds.
 
 ## Keymaps
 
-`<Space>` Leader / `,` Local Leader — full reference: **[CHEATSHEET.md](CHEATSHEET.md)**
+`<Space>` Leader / `,` Local Leader — full reference: **[EN](docs/cheatsheet.en.md)** / **[KO](docs/cheatsheet.ko.md)**
 
 ### Leader Groups
 

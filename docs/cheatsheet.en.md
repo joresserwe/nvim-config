@@ -4,7 +4,7 @@
   Pure lazy.nvim + native <code>vim.*</code> config &nbsp;·&nbsp; Leader <kbd>Space</kbd> &nbsp;·&nbsp; Localleader <kbd>,</kbd>
 </p>
 
-> **Tip:** `<Leader>fk` searches every keymap live (picker), and **which-key** pops up automatically when you hold a prefix (e.g. `<Leader>f`). Descriptions below are the config's own (mixed Korean/English is intentional).
+> **Tip:** `<Leader>fk` searches every keymap live (picker), and **which-key** pops up automatically when you hold a prefix (e.g. `<Leader>f`). Descriptions below are the config's own.
 
 Mode annotations mark non-normal maps: `(x)` visual/select, `(o)` operator-pending, `(i)` insert, `(t)` terminal. Unmarked = normal.
 
@@ -27,9 +27,9 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 | `x` | delete char to blackhole |
 | `c` | change to blackhole |
 | `s` | disabled (`<Nop>`) |
-| `<Leader>c` | 단어 편집 — change inner word (blackhole) |
-| `<Leader>x` | 단어 제거 (inner reg) — cut word |
-| `<Leader>d` | 단어 제거 (del reg) — delete word |
+| `<Leader>c` | Change inner word (blackhole) |
+| `<Leader>x` | Cut word (into inner reg) |
+| `<Leader>d` | Delete word (into del reg) |
 
 ### Paste
 
@@ -47,10 +47,10 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 
 | Key | Action |
 | --- | --- |
-| `<Leader>o` / `<Leader>O` | 아래/위로 한줄 띄기 — blank line below / above |
-| `<Leader><CR>` | 현재 커서 위치에서 줄바꿈 — split line at cursor |
+| `<Leader>o` / `<Leader>O` | Blank line below / above |
+| `<Leader><CR>` | Split line at cursor |
 | `]<Space>` / `[<Space>` | add empty line below / above cursor |
-| `<C-a>` | 전체 선택 — select all |
+| `<C-a>` | Select all |
 | `<Leader>y` | Surround word (`ysiw`) |
 | `jk` / `jj` (i) | escape to normal mode |
 
@@ -60,9 +60,9 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 
 | Key | Action |
 | --- | --- |
-| `(` / `)` | 7줄 위/아래로 — jump 7 lines up / down |
+| `(` / `)` | Jump 7 lines up / down |
 | `j` / `k` | smart down/up (`gj`/`gk` when no count) |
-| `H` / `L` | 오타 방지 — same as `h` / `l` (typo guard) |
+| `H` / `L` | Same as `h` / `l` (typo guard) |
 | `<C-p>` | jumplist back (`<C-o>`) |
 | `<C-n>` | jumplist forward (`<C-i>`) |
 | `<C-o>` | disabled (use `<C-p>`) |
@@ -104,9 +104,9 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 
 | Key | Action |
 | --- | --- |
-| `<Leader>\` | 세로 분할 — vertical split |
-| `<Leader>-` | 가로 분할 — horizontal split |
-| `<Leader>=` | 분할창 순서 변경 — swap split layout |
+| `<Leader>\` | Vertical split |
+| `<Leader>-` | Horizontal split |
+| `<Leader>=` | Swap split layout |
 | `<Leader>w` | close current window's buffer (per-pane) |
 | `<Leader>m` | maximize / equalize window |
 | `<C-h/j/k/l>` | navigate splits (smart-splits) |
@@ -127,7 +127,7 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 | `<Leader>fz` | Find directories |
 | `<Leader>fc` | Find word under cursor |
 | `<Leader>f/` | Find words (grep) |
-| `<Leader>f?` | Find words (숨김파일포함 — incl. hidden) |
+| `<Leader>f?` | Find words (incl. hidden) |
 | `<Leader>fl` | Find lines (buffer) |
 | `<Leader>fe` | Find history in CWD |
 | `<Leader>fE` | Find history (all paths) |
@@ -423,11 +423,11 @@ Buffer-local per filetype (only mapped where the parser provides the capture).
 
 | Key | Action |
 | --- | --- |
-| `J` / `K` | 한줄 아래로/위로 — move selection down / up |
+| `J` / `K` | Move selection down / up |
 | `<` / `>` | indent left / right (keep selection) |
 | `<Tab>` / `<S-Tab>` | indent / unindent line |
-| `mf` | block insert (앞) — before |
-| `mb` | block append (뒤) — after |
+| `mf` | Block insert (before) |
+| `mb` | Block append (after) |
 | `gc` | toggle comment |
 | `<Leader>/` | toggle comment |
 
