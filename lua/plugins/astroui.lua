@@ -9,6 +9,7 @@ return {
     "AstroNvim/astroui",
     ---@type AstroUIOpts
     opts = {
+      lazygit = false,
       -- change colorscheme
       -- colorscheme = "astrodark",
       colorscheme = "solarized-osaka",

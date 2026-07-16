@@ -2,6 +2,10 @@ return {
   {
     "joresserwe/bufferline.nvim",
     event = "VeryLazy",
+    keys = {
+      { "<tab>", function() require("bufferline").cycle(1) end, desc = "Next buffer" },
+      { "<S-tab>", function() require("bufferline").cycle(-1) end, desc = "Previous buffer" },
+    },
     opts = {
       options = {
         mode = "buffers", -- set to "tabs" to only show tabpages instead

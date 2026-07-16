@@ -4,6 +4,14 @@ return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },
   event = "VeryLazy",
+  keys = {
+    { "<Leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "x", desc = "Send to Claude Code" },
+    { "<Leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add buffer to Claude" },
+    { "<Leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+    { "<Leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+    { "<Leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+    { "<Leader>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select model" },
+  },
   opts = {
     terminal = {
       provider = "external",

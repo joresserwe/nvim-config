@@ -2,6 +2,11 @@
 return {
   "folke/trouble.nvim",
   cmd = "Trouble",
+  keys = {
+    { "sq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix (Trouble)" },
+    { "sd", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+    { "sD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+  },
   opts = {
     focus = true,
     auto_close = true, -- 마지막 항목 해결되면 자동 닫힘

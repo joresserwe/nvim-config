@@ -10,6 +10,8 @@ return {
     },
     keys = {
       { "y", "<Plug>(YankyYank)", mode = { "n", "x" }, desc = "Yank (yanky)" },
+      { "<Leader>fy", function() require("snacks").picker.yanky() end, mode = { "n", "x" }, desc = "Find yanks" },
+      { "sy", function() require("snacks").picker.yanky() end, mode = { "n", "x" }, desc = "Find yanks" },
     },
   },
   {

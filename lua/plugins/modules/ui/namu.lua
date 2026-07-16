@@ -2,6 +2,7 @@
 return {
   "bassamsdata/namu.nvim",
   event = "VeryLazy",
+  keys = { { "<Leader>fs", "<cmd>Namu symbols<cr>", desc = "Search symbols (Namu)" } },
   opts = {
     namu_symbols = {
       options = {

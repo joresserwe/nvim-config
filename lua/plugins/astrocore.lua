@@ -22,7 +22,7 @@ return {
     opts.filetypes = extend(opts.filetypes, require("core.options").filetypes)
 
     -- Mappings can be configured through AstroCore as well.
-    opts.mappings = extend(opts.mappings, require "core.mappings"(opts))
+    opts.mappings = extend(opts.mappings, require "core.astro-overrides"())
 
     -- User commands
     opts.commands = extend(opts.commands, require "core.commands")

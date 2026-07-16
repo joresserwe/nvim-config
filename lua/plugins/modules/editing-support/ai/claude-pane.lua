@@ -140,17 +140,19 @@ function M.external_cmd(cmd_string, env_table)
   return build_split_cmd(cmd_string, env_table)
 end
 
---- 외부 pane 사용 가능 여부
+--- 외부 pane 사용 가능 여부 (env 판정만 — 외부 프로세스 호출 없음)
 ---@return boolean
-function M.is_available()
-  ensure_init()
-  return backend ~= nil
-end
+function M.is_available() return platform.in_wezterm or platform.in_tmux end
 
 -- nvim 종료 시 standalone pane 자동 정리
 vim.api.nvim_create_autocmd("VimLeavePre", {
   callback = kill_all,
   desc = "claude-pane: 외부 pane 정리",
 })
+
+function M.setup()
+  if not M.is_available() then return end
+  vim.keymap.set("n", "<Leader>ac", M.open, { desc = "Open Claude Code pane" })
+end
 
 return M

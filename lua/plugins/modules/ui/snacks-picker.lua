@@ -1,5 +1,19 @@
 return {
   "folke/snacks.nvim",
+  keys = {
+    { "fd", function() require("snacks").picker.diagnostics() end, desc = "Search diagnostics" },
+    { "<Leader>f`", function() require("snacks").picker.marks() end, desc = "Find marks" },
+    { "<Leader>f'", function() require("snacks").picker.registers() end, desc = "Find registers" },
+    { "<Leader>f/", function() require("snacks").picker.grep() end, desc = "Find words" },
+    { "<Leader>f?", function() require("snacks").picker.grep { hidden = true, ignored = false } end, desc = "Find words(숨김파일포함)" },
+    { "<Leader>fe", function() require("snacks").picker.recent { filter = { cwd = true } } end, desc = "Find history in CWD" },
+    { "<Leader>fE", function() require("snacks").picker.recent() end, desc = "Find history All Path" },
+    { "<Leader>fS", function() require("snacks").picker.lsp_symbols() end, desc = "Search symbols (Snacks)" },
+    { "<Leader>fz", function() require("snacks").picker.zoxide() end, desc = "Find directories" },
+    { "<Leader>fu", function() require("snacks").picker.undo() end, desc = "Find Undo" },
+    { "<Leader>fl", function() require("snacks").picker.lines() end, desc = "Find Lines" },
+    { "su", function() require("snacks").picker.undo() end, desc = "Find Undo" },
+  },
   ---@type snacks.Config
   opts = {
     picker = {

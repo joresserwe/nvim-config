@@ -5,6 +5,11 @@ return {
     "nvimtools/hydra.nvim",
   },
   cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+  keys = {
+    { "mm", function() require("multicursors").start() end, desc = "multicursor start" },
+    { "m/", function() require("multicursors").new_pattern() end, desc = "multicursor search" },
+    { "mm", function() require("multicursors").search_visual() end, mode = "x", desc = "multicursor search" },
+  },
   opts = {
     normal_keys = {
       ["m"] = {

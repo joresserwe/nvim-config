@@ -1,5 +1,18 @@
 return {
   "nvim-neo-tree/neo-tree.nvim",
+  keys = {
+    {
+      "<Leader>e",
+      function()
+        if vim.bo.filetype == "neo-tree" then
+          vim.cmd.Neotree "toggle"
+        else
+          vim.cmd.Neotree "focus"
+        end
+      end,
+      desc = "Toggle Explorer",
+    },
+  },
   opts = function(_, opts)
     opts.filesystem.filtered_items = {
       hide_gitignored = false,
