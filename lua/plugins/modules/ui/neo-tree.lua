@@ -44,5 +44,10 @@ return {
       ["S"] = false,
       ["C"] = false,
     })
+
+    opts.event_handlers = vim.list_extend(opts.event_handlers or {}, {
+      { event = "file_renamed", handler = function(data) Snacks.rename.on_rename_file(data.source, data.destination) end },
+      { event = "file_moved", handler = function(data) Snacks.rename.on_rename_file(data.source, data.destination) end },
+    })
   end,
 }

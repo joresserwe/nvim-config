@@ -6,6 +6,7 @@ return {
       { "<Leader>p", group = "󰅌 Paste" },
       { "<Leader>s", group = " Session" },
       { "<Leader>a", group = " AI" },
+      { "<Leader>l", group = "Language Tools", mode = { "n", "v" } },
       { "<Leader>,", group = "Debugger" },
       { "<Leader>'", group = "Plugins" },
     },

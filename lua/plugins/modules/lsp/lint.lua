@@ -4,7 +4,14 @@ return {
     "mfussenegger/nvim-lint",
     event = "User AstroFile",
     dependencies = { "mason-org/mason.nvim" },
-    opts = {},
+    opts = {
+      linters_by_ft = {
+        css = { "stylelint" },
+        scss = { "stylelint" },
+        less = { "stylelint" },
+        sh = { "shellcheck" },
+      },
+    },
     config = function(_, opts)
       local lint = require "lint"
       lint.linters_by_ft = opts.linters_by_ft or {}

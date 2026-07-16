@@ -1,5 +1,5 @@
 -- Java: nvim-jdtls로 jdtls 직접 구동 + java-debug/java-test DAP 연동.
--- mason-lspconfig 자동 셋업에서는 제외됨 (lsp/config.lua handlers.jdtls = false).
+-- mason-lspconfig 자동 셋업에서는 제외됨 (lsp/setup.lua의 enable 목록에서 제외).
 return {
   "mfussenegger/nvim-jdtls",
   ft = "java",
@@ -40,8 +40,6 @@ return {
         on_attach = function(client, bufnr)
           require("jdtls").setup_dap { hotcodereplace = "auto" }
           require("jdtls.dap").setup_dap_main_class_configs()
-          local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
-          if astrolsp_avail then astrolsp.on_attach(client, bufnr) end
         end,
       }
     end

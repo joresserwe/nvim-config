@@ -2,6 +2,7 @@
 -- 플러그인 spec으로 표현하기 어려운 플랫폼/터미널 통합을 lua/integrations/ 아래에 분리.
 
 require "core.mappings"
+require "lsp.setup"
 require "integrations.wezterm"
 require "integrations.clipboard"
 require("plugins.modules.editing-support.ai.claude-pane").setup()
