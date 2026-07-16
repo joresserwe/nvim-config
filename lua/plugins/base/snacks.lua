@@ -9,33 +9,56 @@ return {
     local icons = require "core.icons"
 
     opts.dashboard = {
+      width = 50,
       preset = {
         keys = {
-          { key = "n", action = "<Leader>n", icon = icons.get "FileNew", desc = "New File  " },
-          { key = "f", action = "<Leader>ff", icon = icons.get "Search", desc = "Find File  " },
-          { key = "o", action = "<Leader>fe", icon = icons.get "DefaultFile", desc = "Recents  " },
-          { key = "w", action = "<Leader>f/", icon = icons.get "WordFile", desc = "Find Word  " },
-          { key = "'", action = "<Leader>f`", icon = icons.get "Bookmarks", desc = "Bookmarks  " },
-          { key = "s", action = "<Leader>sl", icon = icons.get "Refresh", desc = "Last Session  " },
+          { key = "f", action = "<Leader>ff", icon = icons.get "Search", desc = "Find File" },
+          { key = "g", action = "<Leader>f/", icon = icons.get "WordFile", desc = "Grep" },
+          { key = "r", action = "<Leader>fe", icon = icons.get "DefaultFile", desc = "Recent Files" },
+          { key = "s", action = "<Leader>sl", icon = icons.get "Session", desc = "Last Session" },
+          { key = "n", action = "<Leader>n", icon = icons.get "FileNew", desc = "New File" },
         },
-        header = table.concat({
-          " █████  ███████ ████████ ██████   ██████ ",
-          "██   ██ ██         ██    ██   ██ ██    ██",
-          "███████ ███████    ██    ██████  ██    ██",
-          "██   ██      ██    ██    ██   ██ ██    ██",
-          "██   ██ ███████    ██    ██   ██  ██████ ",
-          "",
-          "███    ██ ██    ██ ██ ███    ███",
-          "████   ██ ██    ██ ██ ████  ████",
-          "██ ██  ██ ██    ██ ██ ██ ████ ██",
-          "██  ██ ██  ██  ██  ██ ██  ██  ██",
-          "██   ████   ████   ██ ██      ██",
-        }, "\n"),
       },
       sections = {
-        { section = "header", padding = 5 },
+        function()
+          local logo = {
+            { [[███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗]], "#65bcff" },
+            { [[████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║]], "#61a6f9" },
+            { [[██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║]], "#6d8df5" },
+            { [[██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║]], "#8a7ff0" },
+            { [[██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║]], "#a878ec" },
+            { [[╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]], "#c974e6" },
+          }
+          for name, hl in pairs {
+            SnacksDashboardIcon = { fg = "#65bcff" },
+            SnacksDashboardDesc = { fg = "#9aa5ce" },
+            SnacksDashboardKey = { fg = "#c974e6", bold = true },
+            SnacksDashboardFooter = { fg = "#9aa5ce", italic = true },
+            SnacksDashboardSpecial = { fg = "#8a7ff0" },
+          } do
+            vim.api.nvim_set_hl(0, name, hl)
+          end
+          local items = { { text = { { "" } }, padding = 1 } }
+          for i, line in ipairs(logo) do
+            vim.api.nvim_set_hl(0, "DashLogo" .. i, { fg = line[2], bold = true })
+            items[#items + 1] = { text = { { line[1], hl = "DashLogo" .. i } } }
+          end
+          items[#items].padding = 3
+          return items
+        end,
         { section = "keys", gap = 1, padding = 3 },
-        { section = "startup" },
+        function()
+          local stats = require("lazy.stats").stats()
+          local ms = math.floor(stats.startuptime + 0.5)
+          return {
+            align = "center",
+            text = {
+              { "⚡ " .. ms .. "ms", hl = "special" },
+              { "  ·  ", hl = "footer" },
+              { stats.loaded .. "/" .. stats.count .. " plugins", hl = "footer" },
+            },
+          }
+        end,
       },
     }
 
