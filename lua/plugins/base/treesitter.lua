@@ -47,10 +47,6 @@ end
 function M.install(languages, cb)
   local ok, ts = pcall(require, "nvim-treesitter")
   if not ok then return end
-  if vim.fn.executable "tree-sitter" == 0 then
-    vim.notify_once("treesitter: tree-sitter CLI 없음 — :MasonToolsInstall 후 재시작하면 파서가 설치됩니다", vim.log.levels.WARN)
-    return
-  end
   if not languages then
     local lang = vim.treesitter.language.get_lang(vim.bo[vim.api.nvim_get_current_buf()].filetype)
     languages = M.available()[lang] and { lang } or {}
@@ -58,12 +54,15 @@ function M.install(languages, cb)
     languages = ts.get_available()
   end
   languages = vim.tbl_filter(function(lang) return not M.has_parser(lang) end, languages)
-  if next(languages) then
-    ts.install(languages, { summary = true }):await(function()
-      M.installed(true)
-      if cb then cb() end
-    end)
+  if not next(languages) then return end
+  if vim.fn.executable "tree-sitter" == 0 then
+    vim.notify_once("treesitter: tree-sitter CLI 없음 — :MasonToolsInstall 후 재시작하면 파서가 설치됩니다", vim.log.levels.WARN)
+    return
   end
+  ts.install(languages, { summary = true }):await(function()
+    M.installed(true)
+    if cb then cb() end
+  end)
 end
 
 function M.has_capture(lang, query, capture)
