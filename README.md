@@ -2,36 +2,37 @@
 
 <p align="center">
   <a href="https://neovim.io"><img alt="Neovim" src="https://img.shields.io/badge/Neovim-0.12%2B-57A143?style=flat&logo=neovim&logoColor=white" /></a>
-  <a href="https://github.com/AstroNvim/AstroNvim"><img alt="AstroNvim" src="https://img.shields.io/badge/AstroNvim-v6-7DC4E4?style=flat" /></a>
   <a href="https://github.com/folke/lazy.nvim"><img alt="lazy.nvim" src="https://img.shields.io/badge/lazy.nvim-plugin%20manager-B7BDF8?style=flat" /></a>
+  <img alt="Startup" src="https://img.shields.io/badge/startup-~50ms-F7DF1E?style=flat&logo=lightning&logoColor=black" />
   <img alt="macOS" src="https://img.shields.io/badge/macOS-000000?style=flat&logo=apple&logoColor=white" />
   <img alt="WSL2" src="https://img.shields.io/badge/WSL2-4D4D4D?style=flat&logo=linux&logoColor=white" />
 </p>
 
 <p align="center">
   Personal Neovim configuration for full-stack web development.<br/>
-  TypeScript/JavaScript focused, AI-assisted, Korean input ready.
+  TypeScript/JavaScript + Java focused, AI-assisted, Korean input ready.
 </p>
 
 ---
 
 ## Highlights
 
+> **Framework-free** — pure lazy.nvim + native `vim.*` APIs. No distro, ~50ms startup.
+>
 > **Modular** — Drop a `.lua` file into `modules/` to add a plugin. No imports needed.
 >
-> **AI-native** — Claude Code IDE extension with in-editor terminal, diffs, and external pane.
->
-> **Portable** — New modules use native `vim.*` APIs. AstroNvim coupling is isolated and replaceable.
+> **AI-native** — Claude Code IDE extension with in-editor terminal, diffs, and external wezterm panes.
 
 <details>
 <summary><strong>More features</strong></summary>
 
-- **Tokyo Night** default + 6 alternative colorschemes, all transparent
-- **Blink.cmp** completion with LSP, snippets, path, buffer, emoji sources
+- **Native LSP** — `vim.lsp.config` / `vim.lsp.enable` + single `LspAttach` autocmd, no framework glue
+- **Solarized Osaka** default + 9 alternative colorschemes, all transparent
+- **Blink.cmp** completion with LSP, snippets, path, buffer, emoji sources + Copilot inline suggestions
 - **Lualine + Bufferline + Dropbar** — full statusline / tabline / breadcrumb stack
 - **Korean langmap** — 2-bul keyboard input without mode switching
-- **Register separation** — yank, delete, change, cut each use dedicated registers
-- **Session persistence** — auto-save and restore via persistence.nvim
+- **Register separation** — yank, delete, cut, change each route to dedicated registers
+- **Task runner** — overseer.nvim with Gradle / Spring templates
 
 </details>
 
@@ -40,35 +41,30 @@
 ## Architecture
 
 ```
-init.lua -> lazy_setup.lua -> polish.lua
-
-AstroNvim core
-  -> community.lua          AstroCommunity imports
-  -> plugins/astrocore.lua  <- lua/core/        options, mappings, autocmds
-  -> plugins/astroui.lua    <- lua/highlights/   colors, palette
-  -> plugins/astrolsp.lua   <- lua/lsp/          servers, formatting, linting
-  -> plugins/modules/*      <- auto-loaded plugin specs
+init.lua                leader keys -> lazy bootstrap -> core.apply (options/diagnostics)
+  -> lazy_setup.lua     { import "plugins.base" } -> { import "plugins" (modules) }
+  -> polish.lua         core.autocmds -> core.mappings -> lsp.setup -> highlights.setup
 ```
 
 <details>
 <summary><strong>Directory tree</strong></summary>
 
 ```
+lsp/                       Native vim.lsp.config server settings (rtp-merged)
 lua/
-├── core/                  Options, mappings, commands, diagnostics
-├── lsp/                   Server config, formatting, linting, installer
-├── highlights/            Color definitions and utilities
+├── core/                  Framework-free core
+│   ├── apply.lua          Options / diagnostics / commands applier
+│   ├── autocmds.lua       File events, vim.t.bufs tracking, large-buf guard
+│   ├── mappings.lua       Pure editing keymaps (loaded last, always wins)
+│   ├── icons.lua          Shared icon table
+│   ├── platform.lua       OS detection (macOS / WSL2)
+│   └── winbufs.lua        Per-window buffer tracking
+├── lsp/                   setup (capabilities + enable), attach (buffer maps), installer
+├── highlights/            Palette resolver + ColorScheme applier
 └── plugins/
-    ├── astrocore.lua      AstroCore bridge
-    ├── astroui.lua        AstroUI bridge
-    ├── astrolsp.lua       AstroLSP bridge
-    └── modules/
-        ├── ui/                16 modules
-        ├── colorscheme/        7 themes
-        ├── editing-support/    7 modules
-        ├── lsp/                6 modules
-        ├── utils/              5 modules
-        └── disabled.lua       Nullified AstroNvim defaults
+    ├── base/              Per-plugin base specs (triggers, opts, default keys)
+    └── modules/           User specs — auto-loaded recursively
+        ├── ui/  colorscheme/  editing-support/  lsp/  utils/
 ```
 
 </details>
@@ -87,6 +83,7 @@ lua/
 | **neo-tree.nvim** | File explorer |
 | **trouble.nvim** | Diagnostics, references, quickfix |
 | **snacks.picker** | Fuzzy finder |
+| **snacks.dashboard** | Start screen — gradient logo, quick actions |
 | **namu.nvim** | Zed-style symbol navigator |
 | **outline.nvim** | Symbol outline sidebar |
 | **noice.nvim** | Command line and message UI |
@@ -96,7 +93,7 @@ lua/
 | **smear-cursor.nvim** | Cursor trail animation |
 | **nvim-colorizer.lua** | Inline color preview (CSS, Tailwind) |
 | **mini.icons** | Icon provider |
-| **smart-splits.nvim** | Window resize mode |
+| **smart-splits.nvim** | Window navigation / resize across mux panes |
 
 ### Editing
 
@@ -106,7 +103,8 @@ lua/
 | **multicursor.nvim** | Multi-cursor editing via hydra |
 | **nvim-surround** | Surround operations |
 | **refactoring.nvim** | Refactoring tools |
-| **autosave** | Auto-save on events |
+| **grug-far.nvim** | Project-wide search and replace |
+| **auto-save.nvim** | Auto-save on events |
 | **markview.nvim** | Markdown preview |
 | **helpview.nvim** | Enhanced help viewer |
 
@@ -119,18 +117,20 @@ lua/
 | **nvim-lint** | Linter dispatcher |
 | **tiny-inline-diagnostic.nvim** | Inline diagnostic display |
 | **inc-rename.nvim** | Rename with preview |
-| **dap-view.nvim** | Debugger UI |
+| **nvim-jdtls** | Java LSP with debug / test bundles |
+| **nvim-dap + dap-view** | Debugger UI |
 
 ### AI
 
 | Plugin | Role |
 |:-------|:-----|
 | **claudecode.nvim** | Claude Code IDE extension — terminal, diffs, model select |
-| **claude-pane** | External Claude CLI pane (wezterm / tmux) |
+| **claude-pane** | External Claude CLI panes (wezterm / tmux) |
+| **copilot.lua** | Inline suggestions, `<Tab>` accept via blink.cmp |
 
 ### Colorschemes
 
-`tokyonight` (default) · `catppuccin` · `onedark` · `solarized-osaka` · `vscode` · `lavi` · `midnights`
+`solarized-osaka` (default) · `tokyonight` · `catppuccin` · `kanagawa` · `rose-pine` · `cyberdream` · `onedark` · `vscode` · `lavi` · `midnights`
 
 All configured with transparent backgrounds.
 
@@ -141,8 +141,9 @@ All configured with transparent backgrounds.
 | **which-key.nvim** | Keybinding cheatsheet |
 | **persistence.nvim** | Session save / restore |
 | **yanky.nvim** | Yank history with picker |
-| **im-select.nvim** | Auto input method switching (macOS) |
+| **overseer.nvim** | Task runner — Gradle / Spring templates |
 | **diffview.nvim** | Git diff viewer |
+| **im-select** | Auto input method switching (macOS) |
 
 ---
 
@@ -154,22 +155,25 @@ All configured with transparent backgrounds.
 
 | Prefix | Category | |
 |:-------|:---------|:--|
-| `<Leader>a` | **AI** | Send to Claude, accept/deny diff, toggle pane |
+| `<Leader>a` | **AI** | Send to Claude, accept/deny diff, open pane |
+| `<Leader>b` | **Buffers** | Pick, close others, sort |
 | `<Leader>e` | **Explorer** | Toggle / focus Neo-tree |
-| `<Leader>f` | **Find** | Diagnostics, grep, symbols, marks, registers, undo |
-| `<Leader>l` | **LSP** | Code action, rename, declaration, format info |
+| `<Leader>f` | **Find** | Files, grep, diagnostics, symbols, registers, undo |
+| `<Leader>g` | **Git** | Hunks, blame, branches, commits, browse |
+| `<Leader>l` | **LSP** | Code action, workspace symbols, CodeLens |
+| `<Leader>r` | **Refactor** | Extract, inline, debug prints |
 | `<Leader>s` | **Session** | Load, select, stop |
 | `<Leader>t` | **Terminal** | Horizontal / vertical split |
-| `<Leader>u` | **UI Toggle** | Autosave, semantic highlighting |
-| `<Leader>w` | **Window** | Close window / buffer |
+| `<Leader>u` | **UI Toggle** | Diagnostics, inlay hints, wrap, spell, … |
+| `<Leader>w` | **Window** | Close window's buffer (pane-scoped) |
 | `<Leader>,` | **Debugger** | DAP controls |
-| `<Leader>'` | **Plugins** | Lazy plugin manager |
+| `<Leader>'` | **Plugins** | Lazy / Mason |
 
 ### Quick Actions
 
 | Key | Action |
 |:----|:-------|
-| `;f` | Format buffer |
+| `;f` | Format buffer (conform) |
 | `;a` | Code action |
 | `;r` | Rename symbol (inc-rename) |
 | `mm` | Start multicursor |
@@ -183,19 +187,19 @@ All configured with transparent backgrounds.
 | `(` / `)` | Jump 7 lines up / down |
 | `<Tab>` / `<S-Tab>` | Next / previous buffer |
 | `<C-p>` / `<C-n>` | Jumplist back / forward |
+| `<C-h/j/k/l>` | Move between splits (smart-splits, mux-aware) |
 | `<Leader>\` / `<Leader>-` | Vertical / horizontal split |
 
 ### Register System
 
-Each operation writes to its own named register — no more accidental overwrites.
+Operations route to dedicated registers — no more accidental overwrites.
 
 | Operation | Register | Paste back |
 |:----------|:---------|:-----------|
-| `y` yank | `"y` | `pi` |
+| `y` yank | inner `"i` | `pi` |
+| `Y` yank | system `"+` | `ps` |
 | `d` delete | `"d` | `pd` |
-| `x` cut | `"x` | — |
-| `c` change | `"c` | — |
-| — | system `"+` | `ps` |
+| `x` / `c` | blackhole | — |
 
 <details>
 <summary><strong>Submenu &amp; visual mode maps</strong></summary>
@@ -209,6 +213,7 @@ Each operation writes to its own named register — no more accidental overwrite
 | `su` | Undo history |
 | `sh` | Symbol outline |
 | `sy` | Yank history |
+| `sp` | Markdown preview |
 
 #### Visual Mode
 
@@ -224,9 +229,12 @@ Each operation writes to its own named register — no more accidental overwrite
 
 ## LSP and Tooling
 
+Native `vim.lsp.config` + `vim.lsp.enable` — server settings live in `lsp/*.lua`, buffer
+keymaps and feature toggles in one `LspAttach` autocmd.
+
 ### Language Servers
 
-`lua_ls` · `vtsls` · `tailwindcss` · `html` · `css` · `emmet` · `bashls` · `jsonls` · `marksman`
+`lua_ls` · `vtsls` · `tailwindcss` · `html` · `css` · `emmet` · `bashls` · `jsonls` · `marksman` · `stylua` · `jdtls` (nvim-jdtls)
 
 All auto-installed via Mason.
 
@@ -242,7 +250,7 @@ All auto-installed via Mason.
 
 ### Debugger
 
-`pwa-node` adapter via js-debug-adapter — launch current file or attach to process.
+`pwa-node` via js-debug-adapter for JS/TS · `java-debug` + `java-test` bundles via jdtls.
 
 ### Defaults
 
