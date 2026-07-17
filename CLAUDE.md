@@ -34,6 +34,5 @@ Load chain: `init.lua` (leader 키 → lazy bootstrap → `core.apply` → `lazy
 
 - **`User AstroFile`/`AstroGitFile`/`AstroLargeBuf` 이벤트는 유산 이름일 뿐** — `core/autocmds.lua`의 자체 emitter가 발화한다(AstroNvim 아님). 여러 스펙의 lazy 트리거이므로 이름 변경 시 일괄 치환 필요.
 - **`vim.t.bufs`는 `core/autocmds.lua`가 유지** — `winbufs.lua`, bufferline `custom_filter`, `]b/[b`가 의존. emitter/추적 autocmd를 지우면 조용히 깨진다.
-- **`highlights` 모듈의 `build()`는 직접 재호출 금지** — 첫 적용이 `Normal`의 fg를 소거해 두 번째 직접 호출은 크래시한다. `setup()`은 polish에서 정확히 1회; 이후 재적용은 `:colorscheme` 경유만 안전(적용부는 pcall 가드됨).
 - **nvim-treesitter는 `main` 브랜치** — 구 `configs` API 없음. 설정은 `plugins/base/treesitter.lua`의 네이티브 적용기(install + FileType `vim.treesitter.start` + textobjects 키맵).
 - **Cross-platform OS isolation**: when doing mac-only or WinOS-only work, never touch the other side's branch. Portable changes must apply 1:1 to both. Ask if unsure.

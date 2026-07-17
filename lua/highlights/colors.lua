@@ -1,6 +1,6 @@
 -- User color settings.
 -- nil follows the theme color automatically.
--- A direct color value ("#RRGGBB") overrides the theme with that color.
+-- A direct value overrides the theme: "#RRGGBB" or any builtin color name (:help gui-colors).
 
 local NONE = "NONE"
 
@@ -11,23 +11,25 @@ return {
   bg = nil, -- background
   fg = nil, -- foreground
   accent = nil, -- primary accent (winbar, scrollbar, etc.)
-  indicator = require("highlights.palette").lime, -- active tab indicator
+  indicator = "lime", -- active tab indicator
   inactive = nil, -- inactive elements (inactive tabs, winbar, etc.)
   unfocused = nil, -- unfocused elements
-  danger = require("highlights.palette").crimson, -- unfocused indicator
-  scrollbar = require("highlights.palette").slate_blue, -- scrollbar handle
+  danger = "crimson", -- unfocused indicator
+  scrollbar = "slateblue", -- scrollbar handle
+  linenr = "dimgray", -- line numbers
   winsep = nil, -- active window separator (colorful-winsep)
 
   --- highlight group definitions (c: resolved semantic colors, bg: transparency-adjusted background)
   ---@param c table
   ---@param bg string
-  highlights = function(c, bg)
+  ---@param blend fun(color: string, alpha: number, base: string): string
+  highlights = function(c, bg, blend)
     return {
-      LineNr = { fg = require("highlights.palette").dim_gray },
-      LineNrAbove = { fg = require("highlights.palette").dim_gray },
-      LineNrBelow = { fg = require("highlights.palette").dim_gray },
+      LineNr = { fg = c.linenr },
+      LineNrAbove = { fg = c.linenr },
+      LineNrBelow = { fg = c.linenr },
 
-      Normal = { bg = bg },
+      Normal = { fg = c.fg, bg = bg },
       NormalNC = { bg = bg },
       NormalFloat = { bg = bg },
       FloatTitle = { bg = bg },
@@ -60,7 +62,7 @@ return {
       BufferLineModifiedSelected = { bg = NONE },
       BufferLineModifiedVisible = { bg = NONE },
 
-      SatelliteBar = { bg = c.scrollbar },
+      SatelliteBar = { bg = blend(c.scrollbar, 0.4, c.bg) },
 
       ColorfulWinSep = { fg = c.winsep },
 
