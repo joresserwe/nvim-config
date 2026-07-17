@@ -140,7 +140,8 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 | `<Leader>f\`` | Find marks |
 | `<Leader>fp` | Find projects |
 | `<Leader>fn` | Find notifications |
-| `<Leader>ft` | Find todos |
+| `<Leader>ft` | Find themes |
+| `<Leader>fT` | Find todos |
 | `<Leader>fy` | Find yanks (also `(x)`) |
 | `<Leader>fu` | Find undo history |
 | `<Leader>fr` | Find and Replace (GrugFar) |

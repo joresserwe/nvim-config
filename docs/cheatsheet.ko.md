@@ -140,7 +140,8 @@
 | `<Leader>f\`` | 마크 찾기 |
 | `<Leader>fp` | 프로젝트 찾기 |
 | `<Leader>fn` | 알림 찾기 |
-| `<Leader>ft` | todo 찾기 |
+| `<Leader>ft` | 테마 찾기 |
+| `<Leader>fT` | todo 찾기 |
 | `<Leader>fy` | yank 찾기 (`(x)`도 가능) |
 | `<Leader>fu` | undo 히스토리 찾기 |
 | `<Leader>fr` | 찾아 바꾸기 (GrugFar) |

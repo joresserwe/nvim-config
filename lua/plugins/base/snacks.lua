@@ -165,6 +165,15 @@ return {
       { "<Leader>fm", function() require("snacks").picker.man() end, desc = "Find man" },
       { "<Leader>fn", function() require("snacks").picker.notifications() end, desc = "Find notifications" },
       { "<Leader>fp", function() require("snacks").picker.projects() end, desc = "Find projects" },
+      {
+        "<Leader>ft",
+        function()
+          require("snacks").picker.colorschemes {
+            transform = function(item) return not item.file:find(vim.env.VIMRUNTIME, 1, true) end,
+          }
+        end,
+        desc = "Find themes",
+      },
     }
     if vim.fn.executable "git" == 1 then
       vim.list_extend(keys, {
