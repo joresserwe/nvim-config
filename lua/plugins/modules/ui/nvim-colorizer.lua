@@ -1,6 +1,9 @@
 return {
   "catgoose/nvim-colorizer.lua",
   event = "BufReadPre",
+  keys = {
+    { "<Leader>uz", "<Cmd>ColorizerToggle<CR>", desc = "Toggle color highlight" },
+  },
   opts = {
     user_default_options = {
       tailwind = true,
@@ -12,6 +15,9 @@ return {
         names = true,
       },
       html = {
+        names = true,
+      },
+      lua = {
         names = true,
       },
     },
