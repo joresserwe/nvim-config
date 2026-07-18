@@ -111,6 +111,11 @@ map("n", "]e", diagnostic_jump(true, "ERROR"), { desc = "Next error" })
 map("n", "[w", diagnostic_jump(false, "WARN"), { desc = "Previous warning" })
 map("n", "]w", diagnostic_jump(true, "WARN"), { desc = "Next warning" })
 
+for _, lhs in ipairs { "grr", "gri", "grn", "grt" } do
+  pcall(vim.keymap.del, "n", lhs)
+end
+pcall(vim.keymap.del, { "n", "x" }, "gra")
+
 -- Buffers (bufferline commands)
 map("n", "]b", function() require("bufferline").cycle(vim.v.count1) end, { desc = "Next buffer" })
 map("n", "[b", function() require("bufferline").cycle(-vim.v.count1) end, { desc = "Previous buffer" })

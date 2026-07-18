@@ -32,6 +32,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method "textDocument/definition" then
       map("n", "gd", function() vim.lsp.buf.definition() end, { desc = "Show the definition of current symbol" })
     end
+    if client:supports_method "textDocument/references" then
+      map("n", "gr", function() vim.lsp.buf.references() end, { desc = "References of current symbol" })
+    end
     if client:supports_method "textDocument/declaration" then
       map("n", "gD", function() vim.lsp.buf.declaration() end, { desc = "Declaration of current symbol" })
       map("n", "<Leader>g'", function() vim.lsp.buf.declaration() end, { desc = "Declaration of current symbol" })
