@@ -1,18 +1,21 @@
+local function toggle_explorer()
+  if vim.bo.filetype == "neo-tree" then
+    vim.cmd.Neotree "toggle"
+  else
+    vim.cmd.Neotree "focus"
+  end
+end
+
+local keys = {
+  { "<Leader>e", toggle_explorer, desc = "Toggle Explorer" },
+}
+if require("core.platform").is_wsl then
+  table.insert(keys, { "<M-1>", toggle_explorer, desc = "Toggle Explorer" })
+end
+
 return {
   "nvim-neo-tree/neo-tree.nvim",
-  keys = {
-    {
-      "<Leader>e",
-      function()
-        if vim.bo.filetype == "neo-tree" then
-          vim.cmd.Neotree "toggle"
-        else
-          vim.cmd.Neotree "focus"
-        end
-      end,
-      desc = "Toggle Explorer",
-    },
-  },
+  keys = keys,
   opts = function(_, opts)
     opts.filesystem.filtered_items = {
       hide_gitignored = false,
