@@ -2,7 +2,7 @@
 return {
   "sphamba/smear-cursor.nvim",
   event = "VeryLazy",
-  cond = vim.g.neovide == nil, -- Neovide has its own cursor animation
+  cond = false,
   opts = {
     smear_between_buffers = true,
     smear_between_neighbor_lines = true,
