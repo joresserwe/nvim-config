@@ -22,7 +22,6 @@ return {
       { "<Leader>bs", group = icons.get("Sort", 1) .. "Sort Buffers" },
       { "<Leader>f", group = icons.get("Search", 1) .. "Find" },
       { "<Leader>g", group = icons.get("Git", 1) .. "Git" },
-      { "<Leader>r", group = icons.get("Refactoring", 1) .. "Refactor", mode = { "n", "v" } },
       { "<Leader>t", group = icons.get("Terminal", 1) .. "Terminal" },
       { "<Leader>u", group = icons.get("Window", 1) .. "UI/UX" },
     },
