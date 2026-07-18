@@ -130,7 +130,7 @@ lua/
 
 ### Colorschemes
 
-`solarized-osaka` (default) · `tokyonight` · `catppuccin` · `kanagawa` · `rose-pine` · `cyberdream` · `onedark` · `vscode` · `lavi` · `midnights`
+`solarized-osaka` (default) · `tokyonight` · `catppuccin` · `kanagawa` · `rose-pine` · `cyberdream` · `onedark` · `vscode` · `midnights`
 
 All configured with transparent backgrounds.
 
