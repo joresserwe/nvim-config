@@ -9,6 +9,7 @@ return {
     condition = function(buf)
       if not vim.api.nvim_buf_is_valid(buf) then return false end
       if vim.bo[buf].buftype == "acwrite" then return false end
+      if vim.bo[buf].readonly then return false end
       return true
     end,
   },
