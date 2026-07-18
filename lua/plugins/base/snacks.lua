@@ -62,7 +62,6 @@ return {
       },
     }
 
-    opts.image = { doc = { enabled = false } }
     opts.input = {}
 
     opts.notifier = {}
