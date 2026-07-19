@@ -86,19 +86,53 @@ local function strip_border_backgrounds()
   end
 end
 
+local function strip_sign_backgrounds()
+  for name in pairs(vim.api.nvim_get_hl(0, {})) do
+    local gutter_sign = name:sub(1, 14) == "DiagnosticSign"
+      or (
+        name:sub(1, 8) == "GitSigns"
+        and not (
+          name:find "Ln"
+          or name:find "Inline"
+          or name:find "Preview"
+          or name:find "VirtLn"
+          or name:find "Blame"
+        )
+      )
+    if gutter_sign then
+      local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+      if hl.bg then
+        hl.bg = nil
+        vim.api.nvim_set_hl(0, name, hl)
+      end
+    end
+  end
+end
+
 local function apply()
   if not vim.g.colors_name then return end
-  if user.transparent_bg then strip_border_backgrounds() end
+  if user.transparent_bg then
+    strip_border_backgrounds()
+    strip_sign_backgrounds()
+  end
   for group, spec in pairs(M.build()) do
     vim.api.nvim_set_hl(0, group, spec)
   end
 end
 
 function M.setup()
+  local group = vim.api.nvim_create_augroup("user_highlights", { clear = true })
   vim.api.nvim_create_autocmd("ColorScheme", {
     desc = "Load custom highlights from user configuration",
-    group = vim.api.nvim_create_augroup("user_highlights", { clear = true }),
+    group = group,
     callback = apply,
+  })
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "GitSignsUpdate",
+    group = group,
+    callback = function()
+      if user.transparent_bg then strip_sign_backgrounds() end
+    end,
   })
   apply()
 end

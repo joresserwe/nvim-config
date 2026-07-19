@@ -29,6 +29,8 @@ return {
       LineNrAbove = { fg = c.linenr },
       LineNrBelow = { fg = c.linenr },
 
+      SignColumn = { bg = bg },
+
       Normal = { fg = c.fg, bg = bg },
       NormalNC = { bg = bg },
       NormalFloat = { bg = bg },
