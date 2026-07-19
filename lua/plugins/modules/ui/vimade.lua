@@ -5,7 +5,7 @@ return {
     "TaDaa/vimade",
     event = "VeryLazy",
     opts = {
-      recipe = { "default", { animate = true } },
+      recipe = { "default", { animate = false } },
       fadelevel = 0.8,
       ncmode = "windows",
     },
