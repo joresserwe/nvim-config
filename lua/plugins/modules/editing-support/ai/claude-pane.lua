@@ -94,7 +94,7 @@ local function build_split_cmd(shell_cmd, env_table)
         table.insert(cmd, k .. "=" .. v)
       end
     end
-    table.insert(cmd, shell_cmd)
+    vim.list_extend(cmd, { platform.shell, "-lc", shell_cmd })
     return cmd
   end
 end
