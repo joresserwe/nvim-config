@@ -5,6 +5,6 @@ require "core.autocmds"
 require "core.mappings"
 require "lsp.setup"
 require("highlights").setup()
-require "integrations.wezterm"
+require "integrations.term"
 require "integrations.clipboard"
 require("plugins.modules.editing-support.ai.claude-pane").setup()
