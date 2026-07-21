@@ -17,6 +17,12 @@ M.is_wsl = M.is_linux
     or (uname.release or ""):lower():match "microsoft" ~= nil
   )
 
+local profile_file = (vim.env.XDG_STATE_HOME or vim.env.HOME .. "/.local/state")
+  .. "/dotfiles/profile"
+local ok, lines = pcall(vim.fn.readfile, profile_file)
+M.profile = ok and vim.trim(lines[1] or "") or nil
+M.is_light = M.profile == "light"
+
 -- User login shell (ensures rc files are sourced). Falls back to sh.
 M.shell = vim.env.SHELL or "/bin/sh"
 

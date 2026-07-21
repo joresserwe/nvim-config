@@ -7,6 +7,7 @@ return {
   priority = 1000,
   opts = function(_, opts)
     local icons = require "core.icons"
+    local platform = require "core.platform"
 
     opts.dashboard = {
       width = 50,
@@ -99,6 +100,7 @@ return {
 
     opts.words = {
       enabled = true,
+      debounce = platform.is_light and 500 or nil,
       filter = function(bufnr)
         return is_valid(bufnr)
           and not is_large(bufnr)
