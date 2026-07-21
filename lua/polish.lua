@@ -7,4 +7,5 @@ require "lsp.setup"
 require("highlights").setup()
 require "integrations.term"
 require "integrations.clipboard"
+require "integrations.memo"
 require("plugins.modules.editing-support.ai.claude-pane").setup()
