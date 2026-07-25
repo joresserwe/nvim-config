@@ -75,7 +75,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     if vim.bo[bufnr].filetype == "markdown" then
-      map("n", "sp", "<cmd>MarkdownPreviewToggle<cr>", { desc = "Toggle Markdown Preview" })
+      map("n", "sp", "<cmd>LivePreview start<cr>", { desc = "Markdown browser preview" })
     end
     if vim.tbl_contains({ "javascriptreact", "typescriptreact" }, vim.bo[bufnr].filetype) then
       map("i", "<>", "<></><left><left><left>", { desc = "which_key_ignore" })
