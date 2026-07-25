@@ -9,7 +9,6 @@ Focused on TypeScript/JavaScript and Java, with Korean input support.
 
 ```
 init.lua              leader keys -> lazy.nvim bootstrap -> core.apply -> lazy_setup -> polish
-
 lsp/                  native vim.lsp.config server settings (rtp-merged)
 lua/core/             framework-free core: options, autocmds, mappings, platform, icons
 lua/lsp/              setup (capabilities + enable list), attach (buffer keymaps), installer
@@ -21,7 +20,7 @@ lua/plugins/modules/  user specs, auto-registered by recursive directory scan
 Adding a plugin means dropping a spec file under `lua/plugins/modules/`.
 Base and module specs for the same plugin are merged by lazy.nvim; module specs win.
 
-## 🍃 Light profile
+## 🪶 Light profile
 
 When `~/.local/state/dotfiles/profile` contains `light` (written by the dotfiles
 installer on machines without a GPU, e.g. a Citrix VDI), the config trades polish
@@ -35,7 +34,7 @@ for input latency:
 | vtsls completion entries | unlimited | 100 |
 | Insert-mode plugins (blink, copilot, ...) | load on InsertEnter | pre-warmed at idle |
 
-## 🧩 Plugins
+## 🔌 Plugins
 
 ### UI
 
@@ -153,7 +152,7 @@ Full reference: [EN](docs/cheatsheet.en.md) / [KO](docs/cheatsheet.ko.md)
 
 ### Register routing
 
-Operations route to dedicated registers instead of clobbering `"`:
+Operations route to dedicated registers instead of clobbering `"` :
 
 | Operation | Register | Paste back |
 |:----------|:---------|:-----------|
@@ -181,7 +180,7 @@ Operations route to dedicated registers instead of clobbering `"`:
 | `<` / `>` | Indent / dedent, keeps selection |
 | `mf` / `mb` | Block insert at start / end of lines |
 
-## 🔧 LSP and tooling
+## 🛠️ LSP and tooling
 
 Server settings live in `lsp/*.lua` (native `vim.lsp.config` rtp merge); buffer
 keymaps and feature toggles in a single `LspAttach` autocmd (`lua/lsp/attach.lua`).
@@ -189,7 +188,6 @@ Servers and tools are auto-installed via Mason.
 
 Language servers: `lua_ls`, `vtsls`, `tailwindcss`, `html`, `cssls`, `emmet_ls`,
 `bashls`, `jsonls`, `marksman`, `stylua`, `jdtls` (nvim-jdtls).
-
 tailwindcss only attaches when a tailwind/postcss config or dependency is present.
 
 | Language | Formatter | Linter |
@@ -208,8 +206,8 @@ Debugger: `pwa-node` (js-debug-adapter) for JS/TS, `java-debug` + `java-test` vi
 | Semantic tokens | on |
 | Code lens | off |
 | Format on save | off, manual `;f` |
-| Virtual text | off, tiny-inline-diagnostic |
+| Diagnostic virtual text | off, tiny-inline-diagnostic instead |
 
 ## 📦 Requirements
 
-Neovim >= 0.12, Git, a [Nerd Font](https://www.nerdfonts.com/), Node.js, ripgrep, fd.
+Neovim 0.12+, git, a Nerd Font, Node.js (copilot), ripgrep, fd
