@@ -26,6 +26,7 @@ Sessionx.vim
 [._]sw[a-p]
 [._]*.un~
 tags
+lazy-lock.json
 
 # VS Code
 .history

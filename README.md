@@ -2,7 +2,7 @@
 
 Personal Neovim configuration on plain lazy.nvim and native APIs (Neovim 0.12+).
 One repo serves macOS and WSL2 Ubuntu — OS differences are branched inline via
-`core/platform.lua`, with a single shared `lazy-lock.json`.
+`core/platform.lua`.
 Focused on TypeScript/JavaScript and Java, with Korean input support.
 
 ## 📁 Layout
