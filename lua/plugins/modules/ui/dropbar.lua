@@ -2,6 +2,7 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     event = "VeryLazy",
+    cond = function() return not require("core.platform").is_light end,
     opts = {
       bar = {
         sources = function(buf, _)

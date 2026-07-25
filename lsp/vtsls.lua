@@ -35,6 +35,7 @@ return {
         maxInlayHintLength = 30,
         completion = {
           enableServerSideFuzzyMatch = true,
+          entriesLimit = require("core.platform").is_light and 100 or nil,
         },
       },
     },

@@ -42,6 +42,6 @@ vim.lsp.enable {
   "vtsls",
 }
 
-vim.lsp.inlay_hint.enable(not require("core.platform").is_light)
+vim.lsp.inlay_hint.enable(true)
 
 require "lsp.attach"

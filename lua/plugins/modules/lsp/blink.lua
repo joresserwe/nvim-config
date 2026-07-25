@@ -1,3 +1,5 @@
+local is_light = require("core.platform").is_light
+
 local function has_words_before()
   local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
@@ -108,7 +110,7 @@ return {
           scrollbar = false,
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
           draw = {
-            treesitter = { "lsp" },
+            treesitter = not is_light and { "lsp" } or {},
             components = {
               kind_icon = {
                 text = function(ctx) return get_kind_icon(ctx).text end,
