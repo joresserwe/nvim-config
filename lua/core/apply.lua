@@ -93,7 +93,6 @@ local base_diag = {
   severity_sort = true,
   float = { source = "if_many", header = "", prefix = "" },
   jump = {
-    float = vim.fn.has "nvim-0.11" == 1 and true or nil,
     on_jump = function(_, bufnr) vim.diagnostic.open_float { bufnr = bufnr, scope = "cursor", focus = false } end,
   },
 }

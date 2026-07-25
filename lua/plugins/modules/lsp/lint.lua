@@ -42,7 +42,7 @@ return {
       end
 
       lint.try_lint() -- start linter immediately
-      local timer = vim.loop.new_timer()
+      local timer = vim.uv.new_timer()
       vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" }, {
         group = vim.api.nvim_create_augroup("auto_lint", { clear = true }),
         desc = "Automatically try linting",
