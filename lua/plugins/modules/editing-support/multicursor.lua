@@ -1,26 +1,25 @@
 return {
-  "smoka7/multicursors.nvim",
-  event = "VeryLazy",
-  dependencies = {
-    "nvimtools/hydra.nvim",
-  },
-  cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+  "jake-stewart/multicursor.nvim",
+  branch = "1.0",
   keys = {
-    { "mm", function() require("multicursors").start() end, desc = "multicursor start" },
-    { "m/", function() require("multicursors").new_pattern() end, desc = "multicursor search" },
-    { "mm", function() require("multicursors").search_visual() end, mode = "x", desc = "multicursor search" },
+    { "mm", function() require("multicursor-nvim").matchAddCursor(1) end, mode = { "n", "x" }, desc = "다음 매치에 커서 추가" },
+    { "mM", function() require("multicursor-nvim").matchAddCursor(-1) end, mode = { "n", "x" }, desc = "이전 매치에 커서 추가" },
+    { "m*", function() require("multicursor-nvim").matchAllAddCursors() end, mode = { "n", "x" }, desc = "모든 매치에 커서 추가" },
+    { "m/", function() require("multicursor-nvim").searchAllAddCursors() end, desc = "검색 결과 전체에 커서 추가" },
+    { "mj", function() require("multicursor-nvim").lineAddCursor(1) end, mode = { "n", "x" }, desc = "아래줄에 커서 추가" },
+    { "mk", function() require("multicursor-nvim").lineAddCursor(-1) end, mode = { "n", "x" }, desc = "윗줄에 커서 추가" },
   },
-  opts = {
-    normal_keys = {
-      ["m"] = {
-        method = function() require("multicursors.normal_mode").find_next() end,
-        opts = { desc = "Find next" },
-      },
-      ["M"] = {
-        method = function() require("multicursors.normal_mode").find_prev() end,
-        opts = { desc = "Find prev" },
-      },
-      ["n"] = { method = false },
-    },
-  },
+  config = function()
+    local mc = require "multicursor-nvim"
+    mc.setup()
+    mc.addKeymapLayer(function(layerSet)
+      layerSet({ "n", "x" }, "<Esc>", function()
+        if not mc.cursorsEnabled() then
+          mc.enableCursors()
+        else
+          mc.clearCursors()
+        end
+      end)
+    end)
+  end,
 }
