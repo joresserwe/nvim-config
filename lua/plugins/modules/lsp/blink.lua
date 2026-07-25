@@ -46,10 +46,17 @@ return {
     version = "^1",
     dependencies = {
       { "moyiz/blink-emoji.nvim", lazy = true },
-      "rafamadriz/friendly-snippets",
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*",
+        build = "make install_jsregexp",
+        dependencies = { "rafamadriz/friendly-snippets" },
+        config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
+      },
     },
     opts_extend = { "sources.default", "cmdline.sources", "term.sources" },
     opts = {
+      snippets = { preset = "luasnip" },
       sources = {
         default = { "lsp", "path", "snippets", "buffer", "emoji" },
         providers = {
@@ -128,7 +135,6 @@ return {
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
         },
       },
-      -- Uses vim.snippet's built-in engine (friendly-snippets auto-loaded).
     },
     specs = {
       {
