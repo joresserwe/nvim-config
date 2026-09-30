@@ -28,6 +28,11 @@ Register discipline: `y`→inner reg `i`, `d`→delete reg `d`, `Y`/`·s` family
 | `c` | change to blackhole |
 | `s` | disabled (`<Nop>`) |
 | `<Leader>c` | Change inner word (blackhole) |
+| `<Leader>Cn` | Copy filename |
+| `<Leader>Cr` | Copy path relative to the current working directory |
+| `<Leader>Cp` | Copy absolute path for the current OS (Linux path in WSL) |
+| `<Leader>Cw` | Copy Windows absolute path (converted with `wslpath` in WSL) |
+| `<Leader>Ca` | Copy full buffer contents, including unsaved edits |
 | `<Leader>x` | Cut word (into inner reg) |
 | `<Leader>d` | Delete word (into del reg) |
 

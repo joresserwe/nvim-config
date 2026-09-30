@@ -13,6 +13,7 @@ return {
     spec = {
       { "s", group = "󰖮 Show", mode = { "n", "x" } },
       { "<Leader>p", group = "󰅌 Paste" },
+      { "<Leader>C", group = "복사" },
       { "<Leader>s", group = " Session" },
       { "<Leader>a", group = " AI" },
       { "<Leader>l", group = "Language Tools", mode = { "n", "v" } },

@@ -28,6 +28,11 @@
 | `c` | blackhole로 change |
 | `s` | 비활성화 (`<Nop>`) |
 | `<Leader>c` | 단어 편집 — inner word change (blackhole) |
+| `<Leader>Cn` | 파일명 복사 |
+| `<Leader>Cr` | 현재 작업 디렉터리 기준 상대 경로 복사 |
+| `<Leader>Cp` | 현재 OS 기준 절대 경로 복사 (WSL에서는 Linux 경로) |
+| `<Leader>Cw` | Windows 절대 경로 복사 (WSL에서는 `wslpath`로 변환) |
+| `<Leader>Ca` | 저장 전 수정을 포함한 전체 버퍼 내용 복사 |
 | `<Leader>x` | 단어 제거 (inner 레지스터) — cut word |
 | `<Leader>d` | 단어 제거 (delete 레지스터) — delete word |
 

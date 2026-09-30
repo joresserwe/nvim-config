@@ -23,6 +23,26 @@ map("n", "P", "<Nop>")
 map("", "s", "<Nop>")
 
 map("n", "<Leader>c", '"_ciw', { desc = "단어 편집" })
+map("n", "<Leader>Cn", function() require("core.copy").filename() end, { desc = "파일명 복사" })
+map(
+  "n",
+  "<Leader>Cr",
+  function() require("core.copy").relative_path() end,
+  { desc = "상대 경로 복사 (CWD 기준)" }
+)
+map(
+  "n",
+  "<Leader>Cp",
+  function() require("core.copy").absolute_path() end,
+  { desc = "절대 경로 복사 (현재 OS)" }
+)
+map("n", "<Leader>Cw", function() require("core.copy").windows_path() end, { desc = "Windows 절대 경로 복사" })
+map(
+  "n",
+  "<Leader>Ca",
+  function() require("core.copy").contents() end,
+  { desc = "전체 내용 복사 (저장 전 수정 포함)" }
+)
 map("n", "<Leader>x", "viwx", { remap = true, desc = "단어 제거 (inner reg)" })
 map("n", "<Leader>d", "viwd", { remap = true, desc = "단어 제거 (del reg)" })
 map("n", "<Leader>pi", 'viw"_x"iP', { desc = "paste from inner clipboard('i')" })
