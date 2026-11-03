@@ -1,4 +1,5 @@
 local Kind = vim.lsp.protocol.CompletionItemKind
+local grip_data = vim.fn.stdpath "data" .. "/grip"
 
 local function statement_at(bufnr, row)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
@@ -42,7 +43,11 @@ return {
     "joryeugene/dadbod-grip.nvim",
     -- Don't use version = "*": the author reset tags from v3.x back to v1.x,
     -- so semver "*" pins to the pre-fix v3.3.1 and throws a lazy.lua spec error.
-    opts = { completion = false },
+    opts = { completion = false, connections_path = grip_data .. "/connections.json" },
+    config = function(_, opts)
+      require("dadbod-grip.paths").grip_dir = function() return grip_data end
+      require("dadbod-grip").setup(opts)
+    end,
   },
   {
     "saghen/blink.cmp",
