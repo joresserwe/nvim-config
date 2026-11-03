@@ -36,6 +36,7 @@ return {
       options = {
         theme = bubbles_theme,
         -- theme = "vscode",
+        globalstatus = true,
         component_separators = "|",
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
