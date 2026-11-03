@@ -47,6 +47,7 @@ return {
     config = function(_, opts)
       require("dadbod-grip.paths").grip_dir = function() return grip_data end
       require("dadbod-grip").setup(opts)
+      require("i18n.dadbod-grip").apply()
     end,
   },
   {
