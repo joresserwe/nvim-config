@@ -4,6 +4,7 @@ local mux = platform.in_tmux or platform.in_wezterm
 
 return {
   "mrjones2014/smart-splits.nvim",
+  tag = "v2.1.1-final",
   lazy = true,
   event = mux and "VeryLazy" or nil,
   opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },

@@ -6,11 +6,7 @@ return {
     event = "VeryLazy",
     dependencies = { "pogyomo/submode.nvim" },
     config = function()
-      require("smart-splits").setup {
-        -- wezterm.lua's is_vim() + ActivatePaneDirection already handle nvim↔pane switching,
-        -- so disable mux integration (avoids the sync wezterm.exe cli call latency on WSL).
-        multiplexer_integration = false,
-      }
+      require("smart-splits").setup {}
 
       local submode = require "submode"
       vim.keymap.set("n", "<C-w><C-r>", "<C-w>r", { remap = true, desc = "Resize mode" })
