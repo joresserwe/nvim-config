@@ -41,6 +41,7 @@ return {
         disabled_filetypes = {
           statusline = {
             "neo-tree",
+            "grip_schema",
             "noice",
             "qf",
             "trouble",
@@ -54,6 +55,7 @@ return {
           "noice",
           "qf",
           "neo-tree",
+          "grip_schema",
           "trouble",
           "snacks_terminal",
           "snacks_picker_input",
