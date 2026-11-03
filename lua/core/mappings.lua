@@ -69,14 +69,21 @@ map("n", "<Leader>=", "<C-w>x", { desc = "분할창 순서 변경" })
 map("n", "<Leader>w", winbufs.close, { desc = "현재 창의 버퍼 닫기 (pane 단위)" })
 map("n", "<Leader>m", function()
   local cur = vim.api.nvim_get_current_win()
-  if vim.g.maximised_win == cur then
-    vim.cmd "wincmd ="
-    vim.g.maximised_win = nil
-  else
-    vim.cmd "wincmd _ | wincmd |"
-    vim.g.maximised_win = cur
+  local state = vim.t.maximised
+  if state and state.win == cur then
+    vim.t.maximised = nil
+    if vim.deep_equal(vim.fn.winlayout(), state.layout) then
+      vim.cmd(state.sizes)
+    else
+      vim.cmd "wincmd ="
+    end
+    return
   end
-end, { desc = "Maximize/equalize window" })
+  state = state or { layout = vim.fn.winlayout(), sizes = vim.fn.winrestcmd() }
+  state.win = cur
+  vim.t.maximised = state
+  vim.cmd "wincmd _ | wincmd |"
+end, { desc = "Maximize/restore window" })
 
 map("x", "J", ":move '>+1<CR>gv-gv", { desc = "한줄 아래로 내림" })
 map("x", "K", ":move '<-2<CR>gv-gv", { desc = "한줄 위로 올림" })
