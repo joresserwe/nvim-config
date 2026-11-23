@@ -24,6 +24,7 @@ M.options = {
   },
   g = {
     autoformat = false,
+    loaded_python3_provider = 0,
   },
 }
 
