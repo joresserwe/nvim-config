@@ -22,6 +22,10 @@ local function save_session()
   if not session_file then
     return
   end
+  -- :mksession also restores argument-list entries left behind by --remote after a document closes.
+  for i = vim.fn.argc(), 1, -1 do
+    if vim.fn.buflisted(vim.fn.argv(i - 1)) == 0 then vim.cmd(i .. "argdelete") end
+  end
   local tmp = session_file .. ".tmp"
   if pcall(vim.cmd, "mksession! " .. vim.fn.fnameescape(tmp)) then
     os.rename(tmp, session_file)
