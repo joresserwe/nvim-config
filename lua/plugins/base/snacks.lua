@@ -90,6 +90,7 @@ return {
     }
 
     opts.scope = {
+      treesitter = { injections = false },
       filter = function(bufnr)
         return is_valid(bufnr)
           and not is_large(bufnr)
