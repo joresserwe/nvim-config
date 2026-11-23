@@ -8,6 +8,11 @@ return {
     local mason = vim.fn.stdpath "data" .. "/mason"
     local jdtls_java = (vim.env.MISE_DATA_DIR or vim.fn.expand "~/.local/share/mise")
       .. "/installs/java/temurin-25/bin/java"
+    local not_bundles = {
+      ["com.microsoft.java.test.plugin.jar"] = true,
+      ["com.microsoft.java.test.runner-jar-with-dependencies.jar"] = true,
+      ["jacocoagent.jar"] = true,
+    }
 
     local function start_jdtls()
       if vim.fn.executable(jdtls_java) ~= 1 then
@@ -20,7 +25,11 @@ return {
       local project_jdk = vim.system({ "mise", "where", "java" }, { cwd = root, text = true }):wait()
 
       local bundles = { mason .. "/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar" }
-      vim.list_extend(bundles, vim.fn.glob(mason .. "/share/java-test/*.jar", false, true))
+      for _, jar in ipairs(vim.fn.glob(mason .. "/share/java-test/*.jar", false, true)) do
+        local name = vim.fs.basename(jar)
+        local shipped_by_jdtls = vim.uv.fs_stat(mason .. "/share/jdtls/plugins/" .. name) ~= nil
+        if not not_bundles[name] and not shipped_by_jdtls then bundles[#bundles + 1] = jar end
+      end
 
       local settings = {
         java = {
