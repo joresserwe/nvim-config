@@ -124,7 +124,6 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
         for _, autocmd in ipairs(vim.api.nvim_get_autocmds { event = args.event }) do
           if autocmd.group_name then skip_augroups[autocmd.group_name] = true end
         end
-        skip_augroups["filetypedetect"] = false
         vim.api.nvim_exec_autocmds("User", { pattern = "AstroFile", modeline = false })
         local folder = vim.fs.abspath(vim.fs.dirname(current_file))
         if vim.fn.has "win32" == 1 then folder = ('"%s"'):format(folder) end
