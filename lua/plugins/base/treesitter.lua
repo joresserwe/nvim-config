@@ -69,9 +69,11 @@ function M.has_capture(lang, query, capture)
   local key = lang .. ":" .. query
   if captures[key] == nil then
     captures[key] = {}
-    local found_captures = (vim.treesitter.query.get(lang, query) or {}).captures
-    for _, found_capture in ipairs(found_captures or {}) do
-      captures[key][found_capture] = true
+    for _, file in ipairs(vim.treesitter.query.get_files(lang, query)) do
+      local text = ("\n" .. table.concat(vim.fn.readfile(file), "\n")):gsub("\n%s*;[^\n]*", "")
+      for found_capture in text:gmatch "@([%w_.%-]+)" do
+        captures[key][found_capture] = true
+      end
     end
   end
   return captures[key][capture] == true
@@ -79,7 +81,7 @@ end
 
 function M.has_query(lang, query)
   local key = lang .. ":" .. query
-  if queries[key] == nil then queries[key] = vim.treesitter.query.get(lang, query) ~= nil end
+  if queries[key] == nil then queries[key] = #vim.treesitter.query.get_files(lang, query) > 0 end
   return queries[key]
 end
 
