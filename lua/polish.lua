@@ -17,7 +17,7 @@ if require("core.platform").is_light then
     once = true,
     callback = function()
       vim.defer_fn(
-        function() require("lazy").load { plugins = { "blink.cmp", "copilot.lua", "auto-save.nvim", "blink.pairs" } } end,
+        function() require("lazy").load { plugins = { "blink.cmp", "auto-save.nvim", "blink.pairs" } } end,
         1500
       )
     end,

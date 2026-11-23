@@ -32,7 +32,7 @@ for input latency:
 | Completion menu treesitter highlight | on | off |
 | Breadcrumbs (dropbar) | on | off |
 | vtsls completion entries | unlimited | 100 |
-| Insert-mode plugins (blink, copilot, ...) | load on InsertEnter | pre-warmed at idle |
+| Insert-mode plugins (blink, auto-save, ...) | load on InsertEnter | pre-warmed at idle |
 
 ## 🔌 Plugins
 
@@ -85,7 +85,6 @@ for input latency:
 |:-------|:-----|
 | claudecode.nvim | Claude Code IDE integration: terminal, diffs |
 | claude-pane (custom) | External Claude CLI panes over wezterm/tmux |
-| copilot.lua | Inline suggestions, `<Tab>` accept via blink.cmp |
 
 ### Colorschemes
 
@@ -210,4 +209,4 @@ Debugger: `pwa-node` (js-debug-adapter) for JS/TS, `java-debug` + `java-test` vi
 
 ## 📦 Requirements
 
-Neovim 0.12+, git, a Nerd Font, Node.js (copilot), ripgrep, fd
+Neovim 0.12+, git, a Nerd Font, ripgrep, fd
