@@ -17,7 +17,7 @@ end
 local function column_owners(url, sql)
   local refs = {}
   for _, kw in ipairs { "from", "join" } do
-    for name in sql:gmatch("%f[%w]" .. kw .. "%s+([%w_%.\"]+)") do
+    for name in sql:gmatch("%f[%w]" .. kw .. '%s+([%w_%."]+)') do
       refs[name:gsub('"', ""):match "[^.]+$"] = true
     end
   end
@@ -48,6 +48,9 @@ return {
       require("dadbod-grip.paths").grip_dir = function() return grip_data end
       require("dadbod-grip").setup(opts)
       require("i18n.dadbod-grip").apply()
+      vim.api.nvim_create_user_command("GripInfo", function() require("core.grip-info").show() end, {
+        desc = "DB 접속 정보 (주소·포트)",
+      })
     end,
   },
   {
@@ -68,7 +71,8 @@ return {
                 local keep = true
                 if item.kind == Kind.Field then
                   if not owners then
-                    owners, in_scope = column_owners(vim.b[ctx.bufnr].db or vim.g.db, statement_at(ctx.bufnr, ctx.cursor[1]))
+                    owners, in_scope =
+                      column_owners(vim.b[ctx.bufnr].db or vim.g.db, statement_at(ctx.bufnr, ctx.cursor[1]))
                   end
                   local owner = owners[item.label]
                   detail = owner and (owner .. " · " .. detail) or detail
