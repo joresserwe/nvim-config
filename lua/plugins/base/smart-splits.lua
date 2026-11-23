@@ -3,7 +3,7 @@ local platform = require "core.platform"
 local mux = platform.in_tmux or platform.in_wezterm
 
 return {
-  "mrjones2014/smart-splits.nvim",
+  "smart-splits-nvim/smart-splits.nvim",
   tag = "v2.1.1-final",
   lazy = true,
   event = mux and "VeryLazy" or nil,

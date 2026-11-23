@@ -2,7 +2,7 @@
 return {
   -- Manual resize: <C-w>r enters resize mode, hjkl to adjust.
   {
-    "mrjones2014/smart-splits.nvim",
+    "smart-splits-nvim/smart-splits.nvim",
     event = "VeryLazy",
     dependencies = { "pogyomo/submode.nvim" },
     config = function()
