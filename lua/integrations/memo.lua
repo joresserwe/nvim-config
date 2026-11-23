@@ -7,6 +7,7 @@ vim.env.NVIM_MEMO_OPEN_FILE = nil
 
 local memo_dir = (vim.env.XDG_DATA_HOME or vim.fn.expand "~/.local/share") .. "/memo"
 vim.fn.mkdir(memo_dir, "p")
+vim.g.memo_dir = memo_dir
 
 local group = vim.api.nvim_create_augroup("memo_mode", {})
 
@@ -45,6 +46,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
     persistence.stop()
     if vim.fn.filereadable(file) == 1 then
       vim.cmd("silent! source " .. vim.fn.fnameescape(file))
+      local winbufs = require "core.winbufs"
+      local win = vim.api.nvim_get_current_win()
+      -- :badd restores background documents without firing the BufEnter that tracks their tabs.
+      for _, buf in ipairs(vim.fn.getbufinfo { buflisted = 1 }) do
+        if buf.name ~= "" and #buf.windows == 0 then winbufs.add(win, buf.bufnr) end
+      end
     end
     for _, f in ipairs(files) do
       vim.cmd("edit " .. vim.fn.fnameescape(f))

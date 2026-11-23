@@ -30,8 +30,11 @@ function M.add(win, buf)
   end
 end
 
---- For the bufferline filter: windows without a list (neo-tree, dashboard, etc.) fall back to the global list.
 function M.contains(buf, win)
+  if not win and vim.bo.filetype == "neo-tree" then
+    local editor = vim.t.winbufs_editor
+    if editor and vim.api.nvim_win_is_valid(editor) then win = editor end
+  end
   local bufs = M.list(win)
   if #bufs == 0 then return not vim.t.bufs or vim.tbl_contains(vim.t.bufs, buf) end
   return vim.tbl_contains(bufs, buf)
@@ -92,9 +95,21 @@ function M.close()
 end
 
 local group = vim.api.nvim_create_augroup("winbufs", { clear = true })
-vim.api.nvim_create_autocmd("BufEnter", {
+-- Neo-tree can mark a buffer listed after entering it, firing BufAdd after BufEnter.
+vim.api.nvim_create_autocmd({ "BufEnter", "BufAdd" }, {
   group = group,
-  callback = function(ev) M.add(vim.api.nvim_get_current_win(), ev.buf) end,
+  callback = function(ev)
+    if ev.buf == vim.api.nvim_get_current_buf() then M.add(vim.api.nvim_get_current_win(), ev.buf) end
+  end,
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+  group = group,
+  callback = function()
+    local win = vim.api.nvim_get_current_win()
+    if trackable(vim.api.nvim_get_current_buf()) and vim.api.nvim_win_get_config(win).relative == "" then
+      vim.t.winbufs_editor = win
+    end
+  end,
 })
 vim.api.nvim_create_autocmd("WinEnter", {
   group = group,

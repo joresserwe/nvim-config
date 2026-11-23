@@ -1,6 +1,6 @@
 local function toggle_explorer()
   if vim.bo.filetype == "neo-tree" then
-    vim.cmd.Neotree "toggle"
+    vim.cmd.Neotree(vim.g.memo_dir and "close" or "toggle")
   else
     vim.cmd.Neotree "focus"
   end
@@ -17,6 +17,22 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   keys = keys,
   opts = function(_, opts)
+    if vim.g.memo_dir then
+      opts.default_source = "last"
+      opts.sources = { "buffers", "filesystem" }
+      opts.source_selector.sources = {
+        { source = "buffers", display_name = "열린 문서" },
+        { source = "filesystem", display_name = "메모 폴더" },
+      }
+      opts.buffers = vim.tbl_deep_extend("force", opts.buffers or {}, {
+        path = "/",
+        bind_to_cwd = false,
+        show_unloaded = true,
+      })
+      opts.filesystem.path = vim.g.memo_dir
+      opts.filesystem.bind_to_cwd = false
+      opts.filesystem.follow_current_file.enabled = false
+    end
     opts.filesystem.filtered_items = {
       hide_gitignored = false,
     }
