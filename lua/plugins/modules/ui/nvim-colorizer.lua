@@ -1,3 +1,5 @@
+local css_var = { parsers = { css_var = { enable = true } } }
+
 return {
   "catgoose/nvim-colorizer.lua",
   event = "BufReadPre",
@@ -5,21 +7,18 @@ return {
     { "<Leader>uz", "<Cmd>ColorizerToggle<CR>", desc = "Toggle color highlight" },
   },
   opts = {
-    user_default_options = {
-      tailwind = true,
-      css = true,
+    options = {
+      parsers = {
+        css = true,
+        css_var = { enable = false },
+      },
     },
     filetypes = {
       "*",
-      css = {
-        names = true,
-      },
-      html = {
-        names = true,
-      },
-      lua = {
-        names = true,
-      },
+      css = css_var,
+      scss = css_var,
+      less = css_var,
+      html = css_var,
     },
   },
 }
