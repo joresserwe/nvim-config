@@ -1,8 +1,4 @@
 -- Native LSP bootstrap. Loaded from polish.lua — server config merging is handled by the rtp lsp/ directory.
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local blink_ok, blink = pcall(require, "blink.cmp")
-if blink_ok then capabilities = blink.get_lsp_capabilities(capabilities) end
-vim.lsp.config("*", { capabilities = capabilities })
 
 -- Overrides upstream lspconfig's root list, which includes ".git" as a
 -- tailwind-v4 fallback and so attaches the server to every git repo.

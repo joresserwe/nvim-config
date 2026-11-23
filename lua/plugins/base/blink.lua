@@ -1,7 +1,8 @@
 return {
   "saghen/blink.cmp",
   version = "^1",
-  event = { "InsertEnter", "CmdlineEnter" },
+  -- Must load before the first LSP client starts: plugin/blink-cmp.lua registers the completion capabilities.
+  event = { "InsertEnter", "CmdlineEnter", "BufReadPre", "BufNewFile" },
   opts_extend = { "sources.default", "cmdline.sources", "term.sources" },
   opts = {
     -- The <Leader>uc/uC toggles flip vim.b/g.completion.
