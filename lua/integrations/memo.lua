@@ -2,6 +2,8 @@ if vim.env.NVIM_MEMO ~= "1" then
   return
 end
 vim.env.NVIM_MEMO = nil
+local open_file = vim.env.NVIM_MEMO_OPEN_FILE
+vim.env.NVIM_MEMO_OPEN_FILE = nil
 
 local memo_dir = (vim.env.XDG_DATA_HOME or vim.fn.expand "~/.local/share") .. "/memo"
 vim.fn.mkdir(memo_dir, "p")
@@ -33,6 +35,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
     local files = vim.tbl_map(function(f)
       return vim.fn.fnamemodify(f, ":p")
     end, vim.fn.argv())
+    if open_file and open_file ~= "" then table.insert(files, open_file) end
     local persistence = require "persistence"
     local file = persistence.current()
     persistence.stop()
